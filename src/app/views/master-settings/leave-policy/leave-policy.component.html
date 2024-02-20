@@ -1,0 +1,211 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-list"></i> Leave Policy Setup</h5>
+          <button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addLeavePolicyModal.show()"><i class="fa fa-plus"></i> Add New Leave Policy</button>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Leave Type</th>
+                <th>Total Days</th>
+                <th>For All</th>
+                <th>Cut Applicable?</th>
+                <th>Carry Forward</th>
+                <th>Document Upload</th>
+                <th>Holiday Deduct</th>
+                <th>Is Acitve</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of leavePolicyList; let i = index;">
+                <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
+                <td>{{ item.total_days}}</td>
+                <td>
+                    <span *ngIf="item.is_applicable_for_all" class="text-success"><i class="fa fa-check"></i></span>
+                    <span *ngIf="!item.is_applicable_for_all" class="text-danger"><i class="fa fa-close"></i> {{ item.applicable_for }}</span>
+                </td>
+                <td>
+                    <span *ngIf="item.is_leave_cut_applicable" class="text-success"><i class="fa fa-check"></i></span>
+                    <span *ngIf="!item.is_leave_cut_applicable" class="text-danger"><i class="fa fa-close"></i></span>
+                </td>
+                <td>
+                    <span *ngIf="item.is_carry_forward" class="text-success"><i class="fa fa-check"></i> {{ item.max_carry_forward_days }} Days</span>
+                    <span *ngIf="!item.is_carry_forward" class="text-danger"><i class="fa fa-close"></i></span>
+                </td>
+                <td>
+                    <span *ngIf="item.is_document_upload" class="text-success"><i class="fa fa-check"></i> After {{ item.document_upload_after_days }} Days</span>
+                    <span *ngIf="!item.is_document_upload" class="text-danger"><i class="fa fa-close"></i></span>
+                </td>
+                <td>
+                    <span *ngIf="item.is_holiday_deduct" class="text-success"><i class="fa fa-check"></i></span>
+                    <span *ngIf="!item.is_holiday_deduct" class="text-danger"><i class="fa fa-close"></i></span>
+                </td>
+                <td>
+                    <span *ngIf="item.is_active" class="status bg-success">Active</span>
+                    <span *ngIf="!item.is_active" class="status bg-danger">Inactive</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                </td>
+              </tr>
+              <tr *ngIf="leavePolicyList.length <= 0">
+                <td colspan="5">No Leave Policy added</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ leavePolicyList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<!--<block-ui></block-ui>-->
+
+<div bsModal #addLeavePolicyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryFrom" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="text-input">Company</label>
+                <div class="col-md-8">
+                    <ng-select [items]="companyList" bindLabel="name" 
+                     bindValue="id" formControlName="company_id" placeholder="Select Company"
+                      [ngClass]="{ 'is-invalid': submitted && f.company_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.company_id.errors" class="error-text">
+                      <span *ngIf="f.company_id.errors.required" class="text-danger"> Company is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="leave_title">Leave Type</label>
+                <div class="col-md-8">
+                    <input type="text" formControlName="leave_title" [ngClass]="{ 'is-invalid': submitted && f.leave_title.errors }" id="leave_title" class="form-control" placeholder="Leave Type">
+                    <div *ngIf="submitted && f.leave_title.errors" class="invalid-feedback">
+                      <span *ngIf="f.leave_title.errors.required" class="text-danger"> Leave Type is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="leave_short_code">Leave Short Code</label>
+                <div class="col-md-8">
+                    <input type="text" formControlName="leave_short_code" [ngClass]="{ 'is-invalid': submitted && f.leave_short_code.errors }" id="leave_short_code" class="form-control" placeholder="Leave Short Code">
+                    <div *ngIf="submitted && f.leave_short_code.errors" class="invalid-feedback">
+                      <span *ngIf="f.leave_short_code.errors.required" class="text-danger"> Leave Short Code is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="total_days">Total Days</label>
+                <div class="col-md-8">
+                    <input type="text" formControlName="total_days" [ngClass]="{ 'is-invalid': submitted && f.total_days.errors }" id="total_days" class="form-control" placeholder="Total Days">
+                    <div *ngIf="submitted && f.total_days.errors" class="invalid-feedback">
+                      <span *ngIf="f.total_days.errors.required" class="text-danger"> Total Days is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Is Applicable For All</label>
+                <div class="col-md-8 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_applicable_for_all" type="checkbox" id="is_applicable_for_all">
+                        <label class="form-check-label" for="is_applicable_for_all">Yes</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="text-input">Applicable For</label>
+                <div class="col-md-8">
+                    <ng-select [items]="applicable_for_list" bindLabel="name" 
+                     bindValue="id" formControlName="applicable_for" placeholder="Select Company"
+                      [ngClass]="{ 'is-invalid': submitted && f.applicable_for.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.applicable_for.errors" class="error-text">
+                      <span *ngIf="f.applicable_for.errors.required" class="text-danger"> Applicable For is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Is Cut Applicable</label>
+                <div class="col-md-8 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_leave_cut_applicable" type="checkbox" id="is_leave_cut_applicable">
+                        <label class="form-check-label" for="is_leave_cut_applicable">Yes</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Is Carry Forward</label>
+                <div class="col-md-8 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_carry_forward" type="checkbox" id="is_carry_forward">
+                        <label class="form-check-label" for="is_carry_forward">Yes</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Is Document Upload</label>
+                <div class="col-md-8 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_document_upload" type="checkbox" id="is_document_upload">
+                        <label class="form-check-label" for="is_document_upload">Yes</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Is Holiday Deduct</label>
+                <div class="col-md-8 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_holiday_deduct" type="checkbox" id="is_holiday_deduct">
+                        <label class="form-check-label" for="is_holiday_deduct">Yes</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="document_upload_after_days">Document Upload After Days</label>
+                <div class="col-md-8">
+                    <input type="text" formControlName="document_upload_after_days" [ngClass]="{ 'is-invalid': submitted && f.document_upload_after_days.errors }" id="document_upload_after_days" class="form-control" placeholder="Document Upload After Days">
+                    <div *ngIf="submitted && f.document_upload_after_days.errors" class="invalid-feedback">
+                      <span *ngIf="f.document_upload_after_days.errors.required" class="text-danger"> Document Upload After Days is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label" for="max_carry_forward_days">Max Carry Forward Days</label>
+                <div class="col-md-8">
+                    <input type="text" formControlName="max_carry_forward_days" [ngClass]="{ 'is-invalid': submitted && f.max_carry_forward_days.errors }" id="max_carry_forward_days" class="form-control" placeholder="Max Carry Forward Days">
+                    <div *ngIf="submitted && f.max_carry_forward_days.errors" class="invalid-feedback">
+                      <span *ngIf="f.max_carry_forward_days.errors.required" class="text-danger"> Max Carry Forward Days is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-4 col-form-label">Is Active</label>
+                <div class="col-md-8 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                        <label class="form-check-label" for="is_active">Active</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

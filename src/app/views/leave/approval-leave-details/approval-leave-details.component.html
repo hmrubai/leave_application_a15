@@ -1,0 +1,293 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-list"></i> Leave Information</h5>
+          <button class="btn btn-square btn-dark btn-sm btn-sm-custom float-right" (click)="backTo()"><i class="fa fa-arrow-circle-o-left"></i> Back</button>
+          <!--<button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="approvalModal.show()"><i class="fa fa-plus"></i> Add New Category</button>-->
+        </div>
+        <div class="card-body">
+
+            <div class="row" *ngIf="is_loaded">
+                <div class="col-lg-12" *ngIf="leaveDetails.leave_count_on_this_day >= 2">
+                    <div class="alert alert-danger" role="alert">
+                        <strong>Already {{ leaveDetails.leave_count_on_this_day }} leave(s) has been approved on this date! </strong>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-top-info border-top-3 mb-3">
+                        <div class="card-header card-title"><strong>Employee Information</strong></div>
+                        <div class="card-body text-dark">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h5 class="text-center mb-2"><i class="fa fa-user"></i> Personal Details</h5>
+                                    <img src="{{ profile_image }}" class="image-div mb-2" alt="">
+
+                                </div>
+                                <div class="col-sm-8 table-responsive">
+                                    <table class="table table-bordered" *ngIf="is_loaded">
+                                        <tr>
+                                            <th>Applicant's Name</th>
+                                            <th>{{ leaveDetails.employee.name }}</th>
+                                        </tr>
+                                        <tr>
+                                            <td>Designation</td>
+                                            <td>{{ leaveDetails.employee.designation }} <span *ngIf="leaveDetails.employee.wing">({{ leaveDetails.employee.wing }})</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Department</td>
+                                            <td>{{ leaveDetails.employee.department }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Email</td>
+                                            <td>{{ leaveDetails.employee.email }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mobile</td>
+                                            <td>{{ leaveDetails.employee.mobile }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Blood Group</td>
+                                            <td>{{ leaveDetails.employee.blood_group }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Joining Date</td>
+                                            <td>{{ leaveDetails.employee.joining_date | date:'fullDate' }}</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-sm-12 mt-3">
+                                    <button type="button" *ngIf="is_approval_permit" (click)="openApproveModal(template)" class="btn btn-success approve-button mb-1 mr-1">Approve</button>
+                                    <button type="button" *ngIf="is_approval_permit" (click)="openRejectModal(rejectTemplate)" class="btn btn-danger reject-button mb-1">Reject</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-top-primary border-top-3 mb-3" *ngIf="is_loaded">
+                        <div class="card-header"><strong>Leave Information</strong>
+                            <button type="button" *ngIf="leaveDetails.leave.leave_status == 'Pending'" class="btn btn-warning btn-sm float-right"><strong>{{ leaveDetails.leave.leave_status }}</strong></button>
+                            <button type="button" *ngIf="leaveDetails.leave.leave_status == 'Approved'" class="btn btn-success btn-sm float-right"><strong>{{ leaveDetails.leave.leave_status }}</strong></button>
+                            <button type="button" *ngIf="leaveDetails.leave.leave_status == 'Rejected'" class="btn btn-danger btn-sm float-right"><strong>{{ leaveDetails.leave.leave_status }}</strong></button>
+                            <button type="button" *ngIf="leaveDetails.leave.leave_status == 'Withdraw'" class="btn btn-danger btn-sm float-right"><strong>Withdrawn</strong></button>
+                        </div>
+                        <div class="card-body text-primary">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td>Leave Type</td>
+                                            <td><strong>{{ leaveDetails.leave.leave_title }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Start Date</td>
+                                            <td><strong>{{ leaveDetails.leave.start_date | date:'dd/MM/y' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>End Date</td>
+                                            <td><strong>{{ leaveDetails.leave.end_date | date:'dd/MM/y' }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Applied For</td>
+                                            <td><strong>{{ leaveDetails.leave.total_applied_days }} Days</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Is Half Day</td>
+                                            <td>
+                                                <span *ngIf="leaveDetails.leave.is_half_day" class="status bg-success">Yes  ({{ leaveDetails.leave.half_day }})</span>
+                                                <span *ngIf="!leaveDetails.leave.is_half_day" class="status bg-danger">No</span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reason</td>
+                                            <td><strong>{{ leaveDetails.leave.leave_reason }}</strong></td>
+                                        </tr>
+                                        <tr *ngIf="leaveDetails.leave.leave_status == 'Rejected'">
+                                            <td>Rejection Cause</td>
+                                            <td><strong>{{ leaveDetails.leave.rejection_cause }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Responsibility Carried By</td>
+                                            <td><strong>{{ leaveDetails.leave.responsibility_carried_by }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Applied Date</td>
+                                            <td><strong>{{ leaveDetails.leave.created_at | date: 'medium' }}</strong></td>
+                                        </tr>
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card border-top-primary border-top-3 mb-3">
+                        <div class="card-header bg-primary card-title"><strong>Leave Status</strong></div>
+                        <div class="card-body text-dark">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive">
+                                    <table class="table table-bordered" *ngIf="is_loaded">
+                                        <thead>
+                                            <tr>
+                                                <th>Authority</th>
+                                                <th>Approval Status</th>
+                                                <th>Step</th>
+                                                <th>Step Flag</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of leaveDetails.leave_flow; let i = index;">
+                                                <td>{{ item.authority_name }}</td>
+                                                <td>
+                                                    <span *ngIf="item.approval_status == 'Pending'" class="status bg-warning">{{ item.approval_status }}</span>
+                                                    <span *ngIf="item.approval_status == 'Approved'" class="status bg-success">{{ item.approval_status }}</span>
+                                                    <span *ngIf="item.approval_status == 'Rejected'" class="status bg-danger">{{ item.approval_status }}</span>
+                                                    <span *ngIf="item.approval_status == 'Withdraw'" class="status bg-danger">Withdrawn</span>
+                                                </td>
+                                                <td>{{ item.step ? item.step : '-' }}</td>
+                                                <td>
+                                                    <span *ngIf="item.step_flag == 'Active'" class="status bg-primary">{{ item.step_flag }}</span>
+                                                    <span *ngIf="item.step_flag == 'Completed'" class="status bg-success">{{ item.step_flag }}</span>
+                                                    <span *ngIf="item.step_flag == 'Pending'" class="status bg-warning">{{ item.step_flag }}</span>
+                                                </td>
+                                                <td>{{ item.updated_at | date:'medium' }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="card border-top-primary border-top-3 mb-3">
+                        <div class="card-header bg-primary card-title"><strong>Leave Balance</strong></div>
+                        <div class="card-body text-dark">
+                            <div class="row">
+                                <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Leave Type</th>
+                                                <th>Total Days</th>
+                                                <th>Avail Days</th>
+                                                <th>Remmaining</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of leaveDetails.leave_balances; let i = index;">
+                                                <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
+                                                <td>{{ item.total_days }}</td>
+                                                <td>{{ item.availed_days ? item.availed_days : '-' }}</td>
+                                                <td>
+                                                    {{ item.remaining_days ? item.remaining_days : '-' }}
+                                                    <button class="btn btn-warning btn-sm ml-2" *ngIf="item.has_cutting_history"(click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-eye"></i></button>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="leaveDetails.leave_balances.length <= 0">
+                                                <td colspan="5">No Leave Balance added</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <!--{{ companyList.length }} Rows -->
+        </div>
+      </div>
+    </div>
+</div>
+<block-ui></block-ui>
+
+<ng-template #template>
+  <div class="modal-body text-center">
+    <h5 class="mb-4">Do you want to arrpove?</h5>
+    <button type="button" class="btn btn-success mb-3" (click)="approveApplication()" >Approve</button>
+    <button type="button" class="btn btn-secondary mb-3" (click)="decline()" >Close</button>
+  </div>
+</ng-template>
+
+<ng-template #rejectTemplate>
+  <div class="modal-body text-center">
+    <h5 class="mb-4">Do you want to reject?</h5>
+    <div class="form-group row">
+        <label class="col-md-12 col-form-label" for="Rejection"><strong>Rejection Cause</strong></label>
+        <div class="col-md-12">
+            <textarea  [(ngModel)]="rejection_cause" id="Rejection" class="form-control" placeholder="Rejection Cause" cols="30" rows="3"></textarea>
+            <!--<input type="text" [(ngModel)]="rejection_cause" id="Rejection" class="form-control" placeholder="Rejection Cause">-->
+        </div>
+    </div>
+    <button type="button" class="btn btn-danger mb-3" (click)="rejectApplication()" >Reject</button>
+    <button type="button" class="btn btn-secondary mb-3" (click)="decline()" >Close</button>
+  </div>
+</ng-template>
+
+<div bsModal #approvalModal="bs-modal" alignment="center" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ modalTitle }}</h5>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        Test
+      </div>
+      <!--<div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>-->
+    </div>
+  </div>
+</div>
+
+<div bsModal #viewExplanationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="explanationModalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body  table-responsive">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning"><strong> <i class="fa fa-cut"></i> Cutting List</strong></li>
+            </ul>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Note</th>
+                        <th>Day(s)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of explanationList; let i = index;">
+                        <td>{{ item.note }}</td>
+                        <td>{{ item.total_cutting_days }}</td>
+                        <td>{{ item.created_at | date:'fullDate' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="explanationModalHide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-list"></i> Designation List</h5>
+          <button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addDesignationModal.show()"><i class="fa fa-plus"></i> Add New Designation</button>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Branch</th>
+                <th>Is Acitve</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of designationList; let i = index;">
+                <td>{{ item.title }}</td>
+                <td>{{ item.company_name ? item.company_name : '-' }}</td>
+                <td>{{ item.branch_name }}</td>
+                <td>
+                    <span *ngIf="item.is_active" class="status bg-success">Active</span>
+                    <span *ngIf="!item.is_active" class="status bg-danger">Inactive</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                </td>
+              </tr>
+              <tr *ngIf="designationList.length <= 0">
+                <td colspan="5">No Designation added</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ designationList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<!--<block-ui></block-ui>-->
+
+<div bsModal #addDesignationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Designation Name</label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="title" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" id="text-input" name="text-input" class="form-control" placeholder="Designation">
+                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                      <span *ngIf="f.title.errors.required" class="text-danger"> Designation Name is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Company</label>
+                <div class="col-md-9">
+                    <ng-select [items]="companyList" bindLabel="name" 
+                     bindValue="id" formControlName="company_id" placeholder="Select Company" (change)="onChangeCompany($event)" 
+                      [ngClass]="{ 'is-invalid': submitted && f.company_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.company_id.errors" class="error-text">
+                      <span *ngIf="f.company_id.errors.required" class="text-danger"> Company is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Branch</label>
+                <div class="col-md-9">
+                    <ng-select [items]="branchList" bindLabel="name" 
+                     bindValue="id" formControlName="branch_id" placeholder="Select Branch"
+                      [ngClass]="{ 'is-invalid': submitted && f.branch_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.branch_id.errors" class="error-text">
+                      <span *ngIf="f.branch_id.errors.required" class="text-danger"> Branch is required</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Is Active</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                        <label class="form-check-label" for="is_active">Active</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

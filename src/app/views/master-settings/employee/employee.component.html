@@ -1,0 +1,836 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+            <div class="row">
+                <div class="col-lg-7">
+                    <h5><i class="fa fa-users"></i> Employee Information</h5>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" [(ngModel)]="search_field" (ngModelChange)="searchField($event)" placeholder="Type ID, Name or Mobile" class="form-control"/>
+                </div>
+                <div class="col-lg-2">
+                    <button class="btn btn-square btn-secondary btn-sm btn-block btn-sm-custom float-right" (click)="addEmployeeModal.show()"><i class="fa fa-user-plus"></i> Add New Employee</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr class="bg-info">
+                <th>Image</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Designation, Department</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of employeeList; let i = index;">
+                <td style="text-align: center;">
+                    <img src="{{ item.profile_image }}" class="avatar-img" alt="">
+                </td>
+                <td>
+                    {{ item.name }}<br/>
+                    {{ item.employee_code }}
+                </td>
+                <td>
+                    {{ item.email }}<br/>
+                    {{ item.mobile }}
+                </td>
+                <td>
+                    {{ item.designation ? item.designation : '-' }}<span *ngIf="item.wing">({{ item.wing_name }})</span>, {{ item.department ? item.department : '-' }}<br/>
+                    <span *ngIf="item.is_hsep" class="badge badge-success">HSEP</span>
+                </td>
+                <td>
+                    <button class="btn btn-success btn-sm mr-1" (click)="openDetailsModal(item)"><i class="fa fa-eye"></i>&nbsp;</button>
+                    <button class="btn btn-primary btn-sm mr-1" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                    <button class="btn btn-warning btn-sm mr-1" (click)="openChangePasswordModal(item)"><i class="fa fa-lock"></i>&nbsp; Reset</button>
+                    <button class="btn btn-danger btn-sm" (click)="openOffboardModal(item, offboardTemplate)"><i class="fa fa-power-off"></i></button>
+                </td>
+              </tr>
+              <tr *ngIf="employeeList.length <= 0">
+                <td colspan="5">No employee found!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ employeeList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<block-ui></block-ui>
+
+<div bsModal #addEmployeeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Name <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" class="form-control" id="name"  placeholder="Name">
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <span *ngIf="f.name.errors.required" class="text-danger"> Name is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label required">Email <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" id="email"  placeholder="Email">
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <span *ngIf="f.email.errors.required" class="text-danger"> Email is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="mobile" class="form-label">Mobile <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" class="form-control" id="mobile"  placeholder="Mobile">
+                    <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                        <span *ngIf="f.mobile.errors.required" class="text-danger"> Mobile is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="employee_id" class="form-label">Employee ID <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="employee_id" [ngClass]="{ 'is-invalid': submitted && f.employee_id.errors }" class="form-control" id="employee_id"  placeholder="Employee ID">
+                    <div *ngIf="submitted && f.employee_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.employee_id.errors.required" class="text-danger"> NEmployee IDame is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="joining_date" class="form-label">Joining Date <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="date" formControlName="joining_date" [ngClass]="{ 'is-invalid': submitted && f.joining_date.errors }" class="form-control" id="joining_date"  placeholder="Joining Date">
+                    <div *ngIf="submitted && f.joining_date.errors" class="invalid-feedback">
+                        <span *ngIf="f.joining_date.errors.required" class="text-danger"> Joining Date is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="gender" class="form-label">Gender <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="gender" bindLabel="value" 
+                        bindValue="id" formControlName="gender" placeholder="Select Gender" 
+                        [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                        <span *ngIf="f.gender.errors.required" class="text-danger"> Gender is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="user_type" class="form-label">User Type <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="user_types" bindLabel="value" 
+                        bindValue="id" formControlName="user_type" placeholder="Select User Type" 
+                        [ngClass]="{ 'is-invalid': submitted && f.user_type.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.user_type.errors" class="invalid-feedback">
+                        <span *ngIf="f.user_type.errors.required" class="text-danger"> User Type is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="company_id" class="form-label">Company <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="companyList" bindLabel="name" 
+                        bindValue="id" formControlName="company_id" placeholder="Select Company" (change)="onChangeCompany($event)" 
+                        [ngClass]="{ 'is-invalid': submitted && f.company_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.company_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.company_id.errors.required" class="text-danger"> Company is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="branch_id" class="form-label">Branch <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="branchList" bindLabel="name" 
+                        bindValue="id" formControlName="branch_id" placeholder="Select Branch" (change)="onChangeBranchOrCompany()"
+                        [ngClass]="{ 'is-invalid': submitted && f.branch_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.branch_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.branch_id.errors.required" class="text-danger"> Branch is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="employment_type_id" class="form-label">Employment Type <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="employmentList" bindLabel="type" 
+                        bindValue="id" formControlName="employment_type_id" placeholder="Select Employment Type" 
+                        [ngClass]="{ 'is-invalid': submitted && f.employment_type_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.employment_type_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.employment_type_id.errors.required" class="text-danger"> Employment Type is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="department_id" class="form-label">Department <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="departmentList" bindLabel="name" 
+                        bindValue="id" formControlName="department_id" placeholder="Select Department" 
+                        [ngClass]="{ 'is-invalid': submitted && f.department_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.department_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.department_id.errors.required" class="text-danger"> Department is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="wing" class="form-label">Wing</label>
+                    <ng-select [items]="wingList" bindLabel="name" 
+                        bindValue="id" formControlName="wing_id" placeholder="Select Wing" 
+                        [ngClass]="{ 'is-invalid': submitted && f.wing_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.wing_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.wing_id.errors.required" class="text-danger"> Wing is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="designation_id" class="form-label">Designation <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="designationList" bindLabel="title" 
+                        bindValue="id" formControlName="designation_id" placeholder="Select Designation" 
+                        [ngClass]="{ 'is-invalid': submitted && f.designation_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.designation_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.designation_id.errors.required" class="text-danger"> Designation is required</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 mt-5 row">
+                    <label class="col-md-5 col-form-label">Is Active</label>
+                    <div class="col-md-7 col-form-label">
+                        <div class="form-check form-check-inline mr-1">
+                            <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                            <label class="form-check-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-8 mt-4 row">
+                    <label class="col-md-3 col-form-label" for="leave_email">Profile Image</label>
+                    <div class="col-md-9">
+                        <input type="file" formControlName="image" (change)="onSelectFile($event)" placeholder="Upload file" accept="image/x-png,image/jpeg" placeholder="Select file"/>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 row">
+                    <div class="col-md-12">
+                        <img src="{{ view_profile_image }}"  class="details-avatar-img" alt="">
+                    </div>
+                </div>
+                <div class="form-group col-md-4 row">
+                    <label class="col-md-5 col-form-label font-weight-bold">Is HSEP</label>
+                    <div class="col-md-7 col-form-label">
+                        <div class="form-check form-check-inline mr-1">
+                            <input class="form-check-input" formControlName="is_hsep" type="checkbox" id="is_hsep">
+                            <label class="form-check-label font-weight-bold" for="is_hsep">Yes</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #editEmployeeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Name <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" class="form-control" id="name"  placeholder="Name">
+                    <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                        <span *ngIf="f.name.errors.required" class="text-danger"> Name is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="email" class="form-label required">Email <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="email" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" class="form-control" id="email"  placeholder="Email">
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                        <span *ngIf="f.email.errors.required" class="text-danger"> Email is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="mobile" class="form-label">Mobile <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="mobile" [ngClass]="{ 'is-invalid': submitted && f.mobile.errors }" class="form-control" id="mobile"  placeholder="Mobile">
+                    <div *ngIf="submitted && f.mobile.errors" class="invalid-feedback">
+                        <span *ngIf="f.mobile.errors.required" class="text-danger"> Mobile is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="employee_id" class="form-label">Employee ID <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="employee_id" [ngClass]="{ 'is-invalid': submitted && f.employee_id.errors }" class="form-control" id="employee_id"  placeholder="Employee ID">
+                    <div *ngIf="submitted && f.employee_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.employee_id.errors.required" class="text-danger"> NEmployee IDame is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="father_name" class="form-label">Father's Name</label>
+                    <input type="text" formControlName="father_name" [ngClass]="{ 'is-invalid': submitted && f.father_name.errors }" class="form-control" id="father_name"  placeholder="Father's Name">
+                    <div *ngIf="submitted && f.father_name.errors" class="invalid-feedback">
+                        <span *ngIf="f.father_name.errors.required" class="text-danger"> Father's Name is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="mother_name" class="form-label">Mother's Name</label>
+                    <input type="text" formControlName="mother_name" [ngClass]="{ 'is-invalid': submitted && f.mother_name.errors }" class="form-control" id="mother_name"  placeholder="Mother's Name">
+                    <div *ngIf="submitted && f.mother_name.errors" class="invalid-feedback">
+                        <span *ngIf="f.mother_name.errors.required" class="text-danger"> Mother's Name is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="fathers_contact_number" class="form-label">Father's Contact Number</label>
+                    <input type="text" formControlName="fathers_contact_number" [ngClass]="{ 'is-invalid': submitted && f.fathers_contact_number.errors }" class="form-control" id="fathers_contact_number"  placeholder="Father's Contact Number">
+                    <div *ngIf="submitted && f.fathers_contact_number.errors" class="invalid-feedback">
+                        <span *ngIf="f.fathers_contact_number.errors.required" class="text-danger"> Father's Contact Number is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="mothers_contact_number" class="form-label">Mother's Contact Number</label>
+                    <input type="text" formControlName="mothers_contact_number" [ngClass]="{ 'is-invalid': submitted && f.mothers_contact_number.errors }" class="form-control" id="mothers_contact_number"  placeholder="Mother's Contact Number">
+                    <div *ngIf="submitted && f.mothers_contact_number.errors" class="invalid-feedback">
+                        <span *ngIf="f.mothers_contact_number.errors.required" class="text-danger"> Mother's Contact Number is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="nid" class="form-label">NID</label>
+                    <input type="text" formControlName="nid" [ngClass]="{ 'is-invalid': submitted && f.nid.errors }" class="form-control" id="nid"  placeholder="NID">
+                    <div *ngIf="submitted && f.nid.errors" class="invalid-feedback">
+                        <span *ngIf="f.nid.errors.required" class="text-danger"> NID is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <label for="office_contact_number" class="form-label">Office Contact Number</label>
+                    <input type="text" formControlName="office_contact_number" [ngClass]="{ 'is-invalid': submitted && f.office_contact_number.errors }" class="form-control" id="office_contact_number"  placeholder="Office Contact Number">
+                    <div *ngIf="submitted && f.office_contact_number.errors" class="invalid-feedback">
+                        <span *ngIf="f.office_contact_number.errors.required" class="text-danger"> Office Contact Number is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="date_of_birth" class="form-label">Date Of Birth</label>
+                    <input type="date" formControlName="date_of_birth" [ngClass]="{ 'is-invalid': submitted && f.date_of_birth.errors }" class="form-control" id="date_of_birth"  placeholder="Date Of Birth">
+                    <div *ngIf="submitted && f.date_of_birth.errors" class="invalid-feedback">
+                        <span *ngIf="f.date_of_birth.errors.required" class="text-danger"> Date Of Birth is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="joining_date" class="form-label">Joining Date <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="date" formControlName="joining_date" [ngClass]="{ 'is-invalid': submitted && f.joining_date.errors }" class="form-control" id="joining_date"  placeholder="Joining Date">
+                    <div *ngIf="submitted && f.joining_date.errors" class="invalid-feedback">
+                        <span *ngIf="f.joining_date.errors.required" class="text-danger"> Joining Date is required</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 mt-5 row">
+                    <label class="col-md-5 col-form-label font-weight-bold">Is HSEP</label>
+                    <div class="col-md-7 col-form-label">
+                        <div class="form-check form-check-inline mr-1">
+                            <input class="form-check-input" formControlName="is_hsep" type="checkbox" id="is_hsep">
+                            <label class="form-check-label font-weight-bold" for="is_hsep">Yes</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label for="present_address" class="form-label">Present Address</label>
+                    <input type="text" formControlName="present_address" [ngClass]="{ 'is-invalid': submitted && f.present_address.errors }" class="form-control" id="present_address" placeholder="Banasree, Dhaka">
+                    <div *ngIf="submitted && f.present_address.errors" class="invalid-feedback">
+                        <span *ngIf="f.present_address.errors.required" class="text-danger"> Present Address is required</span>
+                    </div>
+                </div>
+                <div class="col-md-12 mt-3">
+                    <label for="permanent_address" class="form-label">Permanent Address</label>
+                    <input type="text" formControlName="permanent_address" [ngClass]="{ 'is-invalid': submitted && f.permanent_address.errors }" class="form-control" id="permanent_address" placeholder="Banasree, Dhaka">
+                    <div *ngIf="submitted && f.permanent_address.errors" class="invalid-feedback">
+                        <span *ngIf="f.permanent_address.errors.required" class="text-danger"> Permanent Address is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="division_id" class="form-label">Division</label>
+                    <ng-select [items]="divisionList" bindLabel="name" 
+                        bindValue="id" formControlName="division_id" placeholder="Select Division" (change)="onChangeDivision($event)" 
+                        [ngClass]="{ 'is-invalid': submitted && f.division_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.division_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.division_id.errors.required" class="text-danger"> Division is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="district_id" class="form-label">District</label>
+                    <ng-select [items]="districtList" bindLabel="name" 
+                        bindValue="id" formControlName="district_id" placeholder="Select District" (change)="onChangeDistrict($event)" 
+                        [ngClass]="{ 'is-invalid': submitted && f.district_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.district_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.district_id.errors.required" class="text-danger"> District is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="city_id" class="form-label">City</label>
+                    <ng-select [items]="upazilaList" bindLabel="name" 
+                        bindValue="id" formControlName="city_id" placeholder="Select City" (change)="onChangeUpazila($event)" 
+                        [ngClass]="{ 'is-invalid': submitted && f.city_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.city_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.city_id.errors.required" class="text-danger"> City is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="area_id" class="form-label">Area</label>
+                    <ng-select [items]="unionList" bindLabel="name" 
+                        bindValue="id" formControlName="area_id" placeholder="Select Area"
+                        [ngClass]="{ 'is-invalid': submitted && f.area_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.area_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.area_id.errors.required" class="text-danger"> Area is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="blood_group" class="form-label">Blood Group</label>
+                    <ng-select [items]="bloodGroup" bindLabel="value" 
+                        bindValue="id" formControlName="blood_group" placeholder="Select Blood Group" 
+                        [ngClass]="{ 'is-invalid': submitted && f.blood_group.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.blood_group.errors" class="invalid-feedback">
+                        <span *ngIf="f.blood_group.errors.required" class="text-danger"> Blood Group is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="marital_status" class="form-label">Marital Status</label>
+                    <ng-select [items]="maritalStatus" bindLabel="value" 
+                        bindValue="id" formControlName="marital_status" placeholder="Select Marital Status" 
+                        [ngClass]="{ 'is-invalid': submitted && f.marital_status.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.marital_status.errors" class="invalid-feedback">
+                        <span *ngIf="f.marital_status.errors.required" class="text-danger"> Marital Status is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="gender" class="form-label">Gender <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="gender" bindLabel="value" 
+                        bindValue="id" formControlName="gender" placeholder="Select Gender" 
+                        [ngClass]="{ 'is-invalid': submitted && f.gender.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.gender.errors" class="invalid-feedback">
+                        <span *ngIf="f.gender.errors.required" class="text-danger"> Gender is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="user_type" class="form-label">User Type <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="user_types" bindLabel="value" 
+                        bindValue="id" formControlName="user_type" placeholder="Select User Type" 
+                        [ngClass]="{ 'is-invalid': submitted && f.user_type.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.user_type.errors" class="invalid-feedback">
+                        <span *ngIf="f.user_type.errors.required" class="text-danger"> User Type is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="company_id" class="form-label">Company <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="companyList" bindLabel="name" 
+                        bindValue="id" formControlName="company_id" placeholder="Select Company" (change)="onChangeCompany($event)" 
+                        [ngClass]="{ 'is-invalid': submitted && f.company_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.company_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.company_id.errors.required" class="text-danger"> Company is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="branch_id" class="form-label">Branch <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="branchList" bindLabel="name" 
+                        bindValue="id" formControlName="branch_id" placeholder="Select Branch" (change)="onChangeBranchOrCompany()"
+                        [ngClass]="{ 'is-invalid': submitted && f.branch_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.branch_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.branch_id.errors.required" class="text-danger"> Branch is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="employment_type_id" class="form-label">Employment Type <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="employmentList" bindLabel="type" 
+                        bindValue="id" formControlName="employment_type_id" placeholder="Select Employment Type" 
+                        [ngClass]="{ 'is-invalid': submitted && f.employment_type_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.employment_type_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.employment_type_id.errors.required" class="text-danger"> Employment Type is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="department_id" class="form-label">Department <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="departmentList" bindLabel="name" 
+                        bindValue="id" formControlName="department_id" placeholder="Select Department" 
+                        [ngClass]="{ 'is-invalid': submitted && f.department_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.department_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.department_id.errors.required" class="text-danger"> Department is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="wing" class="form-label">Wing</label>
+                    <ng-select [items]="wingList" bindLabel="name" 
+                        bindValue="id" formControlName="wing_id" placeholder="Select Wing" 
+                        [ngClass]="{ 'is-invalid': submitted && f.wing_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.wing_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.wing_id.errors.required" class="text-danger"> Wing is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="designation_id" class="form-label">Designation <span class="text-danger font-weight-bold">*</span></label>
+                    <ng-select [items]="designationList" bindLabel="title" 
+                        bindValue="id" formControlName="designation_id" placeholder="Select Designation" 
+                        [ngClass]="{ 'is-invalid': submitted && f.designation_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.designation_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.designation_id.errors.required" class="text-danger"> Designation is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="finger_print_id" class="form-label">Finger Print ID <span class="text-danger font-weight-bold">*</span></label>
+                    <input type="text" formControlName="finger_print_id" [ngClass]="{ 'is-invalid': submitted && f.finger_print_id.errors }" class="form-control" id="finger_print_id"  placeholder="Finger Print ID">
+                    <div *ngIf="submitted && f.finger_print_id.errors" class="invalid-feedback">
+                        <span *ngIf="f.finger_print_id.errors.required" class="text-danger"> Finger Print ID is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="personal_alt_contact_number" class="form-label">Personal alt. Contact No</label>
+                    <input type="text" formControlName="personal_alt_contact_number" [ngClass]="{ 'is-invalid': submitted && f.personal_alt_contact_number.errors }" class="form-control" id="personal_alt_contact_number"  placeholder="Personal alt. Contact No">
+                    <div *ngIf="submitted && f.personal_alt_contact_number.errors" class="invalid-feedback">
+                        <span *ngIf="f.personal_alt_contact_number.errors.required" class="text-danger"> Personal alt. Contact No is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="personal_email" class="form-label">Personal Email</label>
+                    <input type="email" formControlName="personal_email" [ngClass]="{ 'is-invalid': submitted && f.personal_email.errors }" class="form-control" id="personal_email"  placeholder="Personal Email">
+                    <div *ngIf="submitted && f.personal_email.errors" class="invalid-feedback">
+                        <span *ngIf="f.personal_email.errors.required" class="text-danger"> Personal Email is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="passport_number" class="form-label">Passport Number</label>
+                    <input type="text" formControlName="passport_number" [ngClass]="{ 'is-invalid': submitted && f.passport_number.errors }" class="form-control" id="passport_number"  placeholder="Passport Number">
+                    <div *ngIf="submitted && f.passport_number.errors" class="invalid-feedback">
+                        <span *ngIf="f.passport_number.errors.required" class="text-danger"> Passport Number is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="spouse_name" class="form-label">Spouse Name</label>
+                    <input type="text" formControlName="spouse_name" [ngClass]="{ 'is-invalid': submitted && f.spouse_name.errors }" class="form-control" id="spouse_name"  placeholder="Spouse Name">
+                    <div *ngIf="submitted && f.spouse_name.errors" class="invalid-feedback">
+                        <span *ngIf="f.spouse_name.errors.required" class="text-danger"> Spouse Name is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="spouse_number" class="form-label">Spouse Number</label>
+                    <input type="text" formControlName="spouse_number" [ngClass]="{ 'is-invalid': submitted && f.spouse_number.errors }" class="form-control" id="spouse_number"  placeholder="Spouse Number">
+                    <div *ngIf="submitted && f.spouse_number.errors" class="invalid-feedback">
+                        <span *ngIf="f.spouse_number.errors.required" class="text-danger"> Spouse Number is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="referee_office" class="form-label">Referee (office)</label>
+                    <input type="text" formControlName="referee_office" [ngClass]="{ 'is-invalid': submitted && f.referee_office.errors }" class="form-control" id="referee_office"  placeholder="Referee (office)">
+                    <div *ngIf="submitted && f.referee_office.errors" class="invalid-feedback">
+                        <span *ngIf="f.referee_office.errors.required" class="text-danger"> Referee (office) is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="referee_relative" class="form-label">Referee (Relative)</label>
+                    <input type="text" formControlName="referee_relative" [ngClass]="{ 'is-invalid': submitted && f.referee_relative.errors }" class="form-control" id="referee_relative"  placeholder="Referee (Relative)">
+                    <div *ngIf="submitted && f.referee_relative.errors" class="invalid-feedback">
+                        <span *ngIf="f.referee_relative.errors.required" class="text-danger"> Referee (Relative) is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="referee_contact_details" class="form-label">Referee Contact Details</label>
+                    <input type="text" formControlName="referee_contact_details" [ngClass]="{ 'is-invalid': submitted && f.referee_contact_details.errors }" class="form-control" id="referee_contact_details"  placeholder="Referee Contact Details">
+                    <div *ngIf="submitted && f.referee_contact_details.errors" class="invalid-feedback">
+                        <span *ngIf="f.referee_contact_details.errors.required" class="text-danger"> Referee Contact Details is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="key_skills" class="form-label">Key Skills</label>
+                    <input type="text" formControlName="key_skills" [ngClass]="{ 'is-invalid': submitted && f.key_skills.errors }" class="form-control" id="key_skills"  placeholder="Key Skills">
+                    <div *ngIf="submitted && f.key_skills.errors" class="invalid-feedback">
+                        <span *ngIf="f.key_skills.errors.required" class="text-danger"> Key Skills is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="highest_level_of_study" class="form-label">Highest Level of Study</label>
+                    <input type="text" formControlName="highest_level_of_study" [ngClass]="{ 'is-invalid': submitted && f.highest_level_of_study.errors }" class="form-control" id="highest_level_of_study"  placeholder="Highest Level of Study">
+                    <div *ngIf="submitted && f.highest_level_of_study.errors" class="invalid-feedback">
+                        <span *ngIf="f.highest_level_of_study.errors.required" class="text-danger"> Highest Level of Study is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="e_tin" class="form-label">e-TIN</label>
+                    <input type="text" formControlName="e_tin" [ngClass]="{ 'is-invalid': submitted && f.e_tin.errors }" class="form-control" id="e_tin"  placeholder="e-TIN">
+                    <div *ngIf="submitted && f.e_tin.errors" class="invalid-feedback">
+                        <span *ngIf="f.e_tin.errors.required" class="text-danger"> e-TIN is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="applicable_tax_amount" class="form-label">Applicable Tax Amount</label>
+                    <input type="text" formControlName="applicable_tax_amount" [ngClass]="{ 'is-invalid': submitted && f.applicable_tax_amount.errors }" class="form-control" id="applicable_tax_amount"  placeholder="Applicable Tax Amount">
+                    <div *ngIf="submitted && f.applicable_tax_amount.errors" class="invalid-feedback">
+                        <span *ngIf="f.applicable_tax_amount.errors.required" class="text-danger"> Applicable Tax Amount is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="official_achievement" class="form-label">Official Achievement</label>
+                    <input type="text" formControlName="official_achievement" [ngClass]="{ 'is-invalid': submitted && f.official_achievement.errors }" class="form-control" id="official_achievement"  placeholder="Official Achievement">
+                    <div *ngIf="submitted && f.official_achievement.errors" class="invalid-feedback">
+                        <span *ngIf="f.official_achievement.errors.required" class="text-danger"> Official Achievement is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <label for="remarks" class="form-label">Remarks</label>
+                    <input type="text" formControlName="remarks" [ngClass]="{ 'is-invalid': submitted && f.remarks.errors }" class="form-control" id="remarks"  placeholder="Remarks">
+                    <div *ngIf="submitted && f.remarks.errors" class="invalid-feedback">
+                        <span *ngIf="f.remarks.errors.required" class="text-danger"> Remarks is required</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 mt-5 row">
+                    <label class="col-md-5 col-form-label">Is Active</label>
+                    <div class="col-md-7 col-form-label">
+                        <div class="form-check form-check-inline mr-1">
+                            <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                            <label class="form-check-label" for="is_active">Active</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-md-8 mt-4 row">
+                    <label class="col-md-3 col-form-label" for="leave_email">Profile Image</label>
+                    <div class="col-md-9">
+                        <input type="file" formControlName="image" (change)="onSelectFile($event)" placeholder="Upload file" accept="image/x-png,image/jpeg" placeholder="Select file"/>
+                    </div>
+                </div>
+                <div class="form-group col-md-4 row">
+                    <div class="col-md-12">
+                        <img src="{{ view_profile_image }}"  class="details-avatar-img" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #addChangePasswordModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="passwordResetForm" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Password  <span class="text-danger font-weight-bold">*</span></label>
+                <div class="col-md-9">
+                    <input type="password" formControlName="new_password" [ngClass]="{ 'is-invalid': submitted && rf.new_password.errors }" id="text-input" class="form-control" placeholder="New Password">
+                    <div *ngIf="submitted && rf.new_password.errors" class="invalid-feedback">
+                      <span *ngIf="rf.new_password.errors.required" class="text-danger"> New Password is required</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-warning" (click)="onResetFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #offboardTemplate>
+  <div class="modal-body bg-danger text-center">
+    <h5 class="mb-4">Do you want to offboard this employee?</h5>
+    <div class="form-group row">
+        <label class="col-md-12 text-dark mt-1" for="OffboardingDate"><strong> <blockquote class="blockquote">{{ offboard_employee.name }} </blockquote></strong></label>
+        <label class="col-md-12 col-form-label" for="OffboardingDate"><strong>Offboarding Date</strong></label>
+        <div class="col-md-12">
+            <input type="date" [(ngModel)]="offboarding_date" id="OffboardingDate" class="form-control" placeholder="Offboarding Date">
+        </div>
+    </div>
+    <button type="button" class="btn btn-warning mb-3" (click)="offboardSubmission()" >Offboard</button>
+    <button type="button" class="btn btn-secondary mb-3" (click)="closeModal()" >Close</button>
+  </div>
+</ng-template>
+
+<div bsModal #employeeDetailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row" *ngIf="is_details">
+            <div class="col-sm-4">
+                <!--<h5 class="text-center mb-2"><i class="fa fa-user"></i> Personal Details</h5>-->
+                <img src="{{ employee_details.profile_image }}" class="profile-image-avater mt-3" alt="">
+            </div>
+            <div class="col-sm-8 table-responsive">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Name</th>
+                        <th>{{ employee_details.name }}</th>
+                    </tr>
+                    <tr>
+                        <td>Designation</td>
+                        <td><strong>{{ employee_details.designation }} <span *ngIf="employee_details.wing">({{ employee_details.wing }})</span></strong></td>
+                    </tr>
+                    <tr>
+                        <td>Department</td>
+                        <td><strong>{{ employee_details.department }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Email</td>
+                        <td><strong>{{ employee_details.email }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Mobile</td>
+                        <td><strong>{{ employee_details.mobile }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Blood Group</td>
+                        <td><strong>{{ employee_details.blood_group }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Joining Date</td>
+                        <td><strong>{{ employee_details.joining_date | date:'fullDate' }}</strong></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-12 table-responsive" *ngIf="is_balance_loaded">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-info"><strong> <i class="fa fa-list"></i> Leave Balance</strong></li>
+                </ul>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Leave Type</th>
+                            <th>Total Days</th>
+                            <th>Avail Days</th>
+                            <th>Remmaining</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of leaveBalanceList; let i = index;">
+                            <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
+                            <td>{{ item.total_days }}</td>
+                            <td>{{ item.availed_days ? item.availed_days : '-' }}</td>
+                            <td>{{ item.remaining_days ? item.remaining_days : '-' }}</td>
+                            <td>
+                                <button class="btn btn-warning btn-sm mr-1" (click)="editLeaveBalanceItem(item)"><i class="fa fa-cut"></i> Cut</button>
+                                <button class="btn btn-info btn-sm" *ngIf="item.has_cutting_history"(click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-list"></i></button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="leaveBalanceList.length <= 0">
+                            <td colspan="5">No Leave Balance added</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #addEmployeeLeaveBalanceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="balanceEntryForm" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="total_cutting_days">Total Days</label>
+                <div class="col-md-9">
+                    <input type="number" formControlName="total_cutting_days" [ngClass]="{ 'is-invalid': submitted && lf.total_cutting_days.errors }" id="total_cutting_days" class="form-control" placeholder="Total Cutting Days">
+                    <div *ngIf="submitted && lf.total_cutting_days.errors" class="invalid-feedback">
+                      <span *ngIf="lf.total_cutting_days.errors.required" class="text-danger"> Total Cutting Days is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="cutting_note">Note</label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="note" [ngClass]="{ 'is-invalid': submitted && lf.note.errors }" id="cutting_note" name="cutting_note" class="form-control" placeholder="Enter Notes">
+                    <div *ngIf="submitted && lf.note.errors" class="invalid-feedback">
+                      <span *ngIf="lf.note.errors.required" class="text-danger"> Note is required</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onLeaveBalanceFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #viewExplanationModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-warning" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="explanationModalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body table-responsive">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-warning"><strong> <i class="fa fa-cut"></i> Cutting List</strong></li>
+            </ul>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Note</th>
+                        <th>Day(s)</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of explanationList; let i = index;">
+                        <td>{{ item.note }}</td>
+                        <td>{{ item.total_cutting_days }}</td>
+                        <td>{{ item.created_at | date:'fullDate' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="explanationModalHide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

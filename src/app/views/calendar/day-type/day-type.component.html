@@ -1,0 +1,80 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-list"></i> Day Types</h5>
+          <!--<button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addDayTypeModal.show()"><i class="fa fa-plus"></i> Add New Employment Type</button>-->
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Day Short Code</th>
+                <th>Is Acitve</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dayTypeList; let i = index;">
+                <td>{{ item.title }}</td>
+                <td>{{ item.day_short_code }}</td>
+                <td>
+                    <span *ngIf="item.is_active" class="status bg-success">Active</span>
+                    <span *ngIf="!item.is_active" class="status bg-danger">Inactive</span>
+                </td>
+                <!--<td>
+                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                </td>-->
+              </tr>
+              <tr *ngIf="dayTypeList.length <= 0">
+                <td colspan="5">No Day Type added</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ dayTypeList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<!--<block-ui></block-ui>-->
+
+<!--<div bsModal #addDayTypeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Type</label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="type" [ngClass]="{ 'is-invalid': submitted && f.type.errors }" id="text-input" name="text-input" class="form-control" placeholder="Type">
+                    <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+                      <span *ngIf="f.type.errors.required" class="text-danger"> Type is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Is Active</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                        <label class="form-check-label" for="is_active">Active</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>-->

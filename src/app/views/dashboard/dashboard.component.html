@@ -1,0 +1,244 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12" *ngIf="user_role == 'Employee'">
+      <div class="row">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-info">
+            <div class="card-body pb-0">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ dashboard.count_total }}</div>
+              <div class="mb-4"><strong>Total Applications</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-success">
+            <div class="card-body pb-0">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ dashboard.count_approved }}</div>
+              <div class="mb-4"><strong>Approved Applications</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-warning">
+            <div class="card-body pb-0">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ dashboard.count_pending }}</div>
+              <div class="mb-4"><strong>Pending</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-danger">
+            <div class="card-body pb-0">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ dashboard.count_rejected }}</div>
+              <div class="mb-4"><strong>Rejected</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12" *ngIf="user_role != 'Employee' && is_subordinate_summary_loaded">
+      <div class="row">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-info">
+            <div class="card-body pb-0">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ subordinateSummary.count_total }}</div>
+              <div class="mb-4"><strong>Total Applications</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-success link-href">
+            <div class="card-body pb-0" [routerLink]="['/leave/approval-approved-leave-list']">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ subordinateSummary.count_approved }}</div>
+              <div class="mb-4"><strong>Approved</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-warning link-href">
+            <div class="card-body pb-0" [routerLink]="['/leave/approval-pending-leave-list']">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ subordinateSummary.count_pending }}</div>
+              <div class="mb-4"><strong>Pending</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-danger link-href">
+            <div class="card-body pb-0" [routerLink]="['/leave/approval-rejected-leave-list']">
+              <button type="button" class="btn btn-transparent p-0 float-right">
+                <i class="icon-notebook"></i>
+              </button>
+              <div class="text-value" *ngIf="is_loaded">{{ subordinateSummary.count_rejected }}</div>
+              <div class="mb-4"><strong>Rejected</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="col-lg-12" *ngIf="user_role != 'Employee'">
+      <div class="card border-top-primary border-top-3 mb-3">
+          <div class="card-header bg-primary card-title"><strong>Subordinate leave list</strong></div>
+          <div class="card-body text-dark table-responsive" *ngIf="is_list_loaded">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Leave Type</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Applied For</th>
+                  <th>Is Half Day</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of subordinateApplicationList | slice:0:3; let i = index;">
+                  <td>{{ item.employee_name }}</td>
+                  <td>{{ item.leave_title }}</td>
+                  <td>{{ item.start_date | date:'dd/MM/y'}}</td>
+                  <td>{{ item.end_date | date:'dd/MM/y' }}</td>
+                  <td>{{ item.total_applied_days }} Days</td>
+                  <td>
+                      <span *ngIf="item.is_half_day" class="status bg-success">Yes ({{ item.half_day }})</span>
+                      <span *ngIf="!item.is_half_day" class="status bg-secondary">No</span>
+                  </td>
+                  <td>
+                      <button type="button"  *ngIf="item.leave_status == 'Pending'" class="btn btn-warning btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                      <button type="button"  *ngIf="item.leave_status == 'Approved'" class="btn btn-success btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                      <button type="button"  *ngIf="item.leave_status == 'Rejected'" class="btn btn-danger btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                  </td>
+                  <td>
+                      <button class="btn btn-primary btn-sm" [routerLink]="['/leave/approval-leave-details', item.id ]"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                  </td>
+                </tr>
+                <tr *ngIf="subordinateApplicationList.length <= 0">
+                  <td colspan="8">No Leave Found!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer">
+              {{ subordinateApplicationList.length }} Rows
+              <span class="float-right" *ngIf="subordinateApplicationList.length >= 0"><a [routerLink]="['/leave/approval-pending-leave-list']" class="link-info">See All..</a></span>
+          </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-6">
+      <div class="card border-top-primary border-top-3 mb-3">
+          <div class="card-header bg-primary card-title"><strong>Academic Calendar</strong></div>
+          <div class="card-body text-dark table-responsive" *ngIf="is_calender_loaded">
+            <ngx-fullcalendar #theCalendar defaultView="month" [events]="events" [options]="options"></ngx-fullcalendar>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-12">
+            <div class="card border-top-primary border-top-3 mb-3">
+                <div class="card-header bg-primary card-title"><strong>My Leave list</strong></div>
+                <div class="card-body text-dark">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
+                            <table class="table table-bordered">
+                              <thead>
+                                <tr>
+                                  <th>Type</th>
+                                  <th>Start</th>
+                                  <th>End</th>
+                                  <th>Days</th>
+                                  <th>Is Half Day</th>
+                                  <th>Status</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let item of applicationList | slice:0:2; let i = index;">
+                                  <td>{{ item.leave_title }}</td>
+                                  <td>{{ item.start_date | date:'dd/MM/y'}}</td>
+                                  <td>{{ item.end_date | date:'dd/MM/y' }}</td>
+                                  <td>{{ item.total_applied_days }} Days</td>
+                                  <td>
+                                      <span *ngIf="item.is_half_day" class="status bg-success">Yes ({{ item.half_day }})</span>
+                                      <span *ngIf="!item.is_half_day" class="status bg-secondary">No</span>
+                                  </td>
+                                  <td>
+                                      <button type="button"  *ngIf="item.leave_status == 'Pending'" class="btn btn-warning btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                                      <button type="button"  *ngIf="item.leave_status == 'Approved'" class="btn btn-success btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                                      <button type="button"  *ngIf="item.leave_status == 'Rejected'" class="btn btn-danger btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="applicationList.length <= 0">
+                                  <td colspan="6">No Leave Applied!</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="card border-top-primary border-top-3 mb-3">
+                <div class="card-header bg-primary card-title"><strong>My Leave Balance</strong></div>
+                <div class="card-body text-dark">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Leave Type</th>
+                                        <th>Total Days</th>
+                                        <th>Avail Days</th>
+                                        <th>Remmaining</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of leaveBalanceList; let i = index;">
+                                        <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
+                                        <td>{{ item.total_days }}</td>
+                                        <td>{{ item.availed_days ? item.availed_days : '-' }}</td>
+                                        <td>{{ item.remaining_days ? item.remaining_days : '-' }}</td>
+                                    </tr>
+                                    <tr *ngIf="leaveBalanceList.length <= 0">
+                                        <td colspan="4">No Leave Balance added</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<block-ui></block-ui>

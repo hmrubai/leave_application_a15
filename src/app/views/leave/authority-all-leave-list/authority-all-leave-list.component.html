@@ -1,0 +1,165 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-list"></i> All Leave List</h5>
+          <div class="col-lg-1 form-control-sm float-right fs-top">
+            <button class="btn btn-info" (click)="resetFilterForm()" >Reset</button>
+          </div>
+          <ng-select [items]="employeeList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
+            bindValue="id" [(ngModel)]="employee_id" (change)="onChangeEmployee($event)" placeholder="Select Employee">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <span><strong>{{ item.name }} - {{item.email}}</strong></span>
+                </ng-template>
+          </ng-select>
+          <div class="col-lg-2 form-control-sm float-right fs-top">
+            <input type="date"  [(ngModel)]="end_date" (change)="changeFilterDate()" id="end_date" class="form-control" placeholder="End Date">
+          </div>
+          <div class="col-lg-2 form-control-sm float-right fs-top">
+            <input type="date"  [(ngModel)]="start_date" (change)="changeFilterDate()" id="start_date" class="form-control" placeholder="Start Date">
+          </div>
+          
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Applicant</th>
+                <th>Leave Type</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Applied For</th>
+                <th>Is Half Day</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of applicationList; let i = index;">
+                <td>{{ item.employee_name }}</td>
+                <td>{{ item.leave_title }}</td>
+                <td>{{ item.start_date | date:'dd/MM/y'}}</td>
+                <td>{{ item.end_date | date:'dd/MM/y' }}</td>
+                <td>{{ item.total_applied_days }} Days</td>
+                <td>
+                    <span *ngIf="item.is_half_day" class="status bg-success">Yes ({{ item.half_day }})</span>
+                    <span *ngIf="!item.is_half_day" class="status bg-secondary">No</span>
+                </td>
+                <td>
+                    <button type="button"  *ngIf="item.leave_status == 'Pending'" class="btn btn-warning btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                    <button type="button"  *ngIf="item.leave_status == 'Approved'" class="btn btn-success btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                    <button type="button"  *ngIf="item.leave_status == 'Rejected'" class="btn btn-danger btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                    <button type="button"  *ngIf="item.leave_status == 'Withdraw'" class="btn btn-danger btn-sm"><strong>Withdrawn</strong></button>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" [routerLink]="['/leave/approval-leave-details', item.id ]"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                </td>
+              </tr>
+              <tr *ngIf="applicationList.length <= 0">
+                <td colspan="8">No Leave Found!</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ applicationList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<block-ui></block-ui>
+
+<div bsModal #addApplyForLeaveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="start_date">Start Date</label>
+                <div class="col-md-9">
+                    <input type="date" formControlName="start_date" (change)="changeDate()" [ngClass]="{ 'is-invalid': submitted && f.start_date.errors }" id="start_date" class="form-control" placeholder="Start Date">
+                    <div *ngIf="submitted && f.start_date.errors" class="invalid-feedback">
+                      <span *ngIf="f.start_date.errors.required" class="text-danger"> Start Date is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="end_date">End Date</label>
+                <div class="col-md-9">
+                    <input type="date" formControlName="end_date" (change)="changeDate()" [ngClass]="{ 'is-invalid': submitted && f.end_date.errors }" id="end_date" class="form-control" placeholder="End Date">
+                    <div *ngIf="submitted && f.end_date.errors" class="invalid-feedback">
+                      <span *ngIf="f.end_date.errors.required" class="text-danger"> End Date is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Is half day</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_half_day" (change)="changeHalfDay()" type="checkbox" id="is_half_day">
+                        <label class="form-check-label" for="is_half_day">Half Day</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Select Day Part</label>
+                <div class="col-md-9">
+                    <ng-select [items]="day_part" bindLabel="value"
+                     bindValue="id" formControlName="half_day" placeholder="Select Leave Type"
+                      [ngClass]="{ 'is-invalid': submitted && f.half_day.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.half_day.errors" class="error-text">
+                      <span *ngIf="f.half_day.errors.required" class="text-danger"> Day Part is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Leave Type</label>
+                <div class="col-md-9">
+                    <ng-select [items]="leavePolicyList" bindLabel="leave_title" (change)="changeLeaveType()"
+                     bindValue="id" formControlName="leave_policy_id" placeholder="Select Leave Type"
+                      [ngClass]="{ 'is-invalid': submitted && f.leave_policy_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.leave_policy_id.errors" class="error-text">
+                      <span *ngIf="f.leave_policy_id.errors.required" class="text-danger"> Leave Type is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Reason</label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="reason" [ngClass]="{ 'is-invalid': submitted && f.reason.errors }" id="text-input" name="text-input" class="form-control" placeholder="Reason">
+                    <div *ngIf="submitted && f.reason.errors" class="invalid-feedback">
+                      <span *ngIf="f.reason.errors.required" class="text-danger"> Reason is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="is_validty_checked">
+              <div class="col-sm-3">
+                <span class="font-weight-bold">Applied For:</span>
+              </div>
+              <div class="col-sm-3">
+                <span class="font-weight-bold font-italic">{{ validity.total_applied_days }} Days</span>
+              </div>
+              <div class="col-sm-3">
+                <span class="font-weight-bold">Remamining:</span>
+              </div>
+              <div class="col-sm-3">
+                <span class="font-weight-bold font-italic">{{ validity.remaining_days }} Days</span>
+              </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

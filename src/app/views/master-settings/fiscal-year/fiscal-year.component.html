@@ -1,0 +1,114 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-list"></i> Fiscal Year Information</h5>
+          <button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addFiscalYearModal.show()"><i class="fa fa-plus"></i> Add New Fiscal Year</button>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Fiscal Year</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Is Acitve</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of fiscalYearList; let i = index;">
+                <td>{{ item.fiscal_year }}</td>
+                <td>{{ item.start_date | date:'fullDate'}}</td>
+                <td>{{ item.end_date | date:'fullDate' }}</td>
+                <td>
+                    <span *ngIf="item.is_active" class="status bg-success">Active</span>
+                    <span *ngIf="!item.is_active" class="status bg-danger">Inactive</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                </td>
+              </tr>
+              <tr *ngIf="fiscalYearList.length <= 0">
+                <td colspan="5">No Fiscal Year added</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ fiscalYearList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<!--<block-ui></block-ui>-->
+
+<div bsModal #addFiscalYearModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="branchForm" class="form-horizontal">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Company</label>
+                <div class="col-md-9">
+                    <ng-select [items]="companyList" bindLabel="name" 
+                     bindValue="id" formControlName="company_id" placeholder="Select Company"
+                      [ngClass]="{ 'is-invalid': submitted && f.company_id.errors }" >
+                     </ng-select>
+                    <div *ngIf="submitted && f.company_id.errors" class="error-text">
+                      <span *ngIf="f.company_id.errors.required" class="text-danger"> Company is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Fiscal Year</label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="fiscal_year" [ngClass]="{ 'is-invalid': submitted && f.fiscal_year.errors }" id="text-input" name="text-input" class="form-control" placeholder="Fiscal Year">
+                    <div *ngIf="submitted && f.fiscal_year.errors" class="invalid-feedback">
+                      <span *ngIf="f.fiscal_year.errors.required" class="text-danger"> Fiscal Year is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="start_date">Start Date</label>
+                <div class="col-md-9">
+                    <input type="date" formControlName="start_date" [ngClass]="{ 'is-invalid': submitted && f.start_date.errors }" id="start_date" class="form-control" placeholder="Start Date">
+                    <div *ngIf="submitted && f.start_date.errors" class="invalid-feedback">
+                      <span *ngIf="f.start_date.errors.required" class="text-danger"> Start Date is required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="end_date">End Date</label>
+                <div class="col-md-9">
+                    <input type="date" formControlName="end_date" [ngClass]="{ 'is-invalid': submitted && f.end_date.errors }" id="end_date" class="form-control" placeholder="End Date">
+                    <div *ngIf="submitted && f.end_date.errors" class="invalid-feedback">
+                      <span *ngIf="f.end_date.errors.required" class="text-danger"> Contact No is required</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Is Active</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                        <label class="form-check-label" for="is_active">Active</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

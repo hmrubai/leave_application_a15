@@ -1,0 +1,168 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-primary">
+          <h5><i class="fa fa-users"></i> Leave Work Flow Setup</h5>
+          <button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addStepModal.show()"><i class="fa fa-plus"></i> Add Flow</button>
+          <ng-select [items]="employeeList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
+            bindValue="id" [(ngModel)]="employee_id" (change)="onChangeEmployee($event)" placeholder="Select Employee">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <span><strong>{{ item.name }} - {{item.email}}</strong></span>
+                </ng-template>
+          </ng-select>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Employee</th>
+                <th>Approval Authority</th>
+                <th>Step</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of approvalFlowList; let i = index;">
+                <td> {{ item.employee_name }} - {{ item.employee_email }}</td>
+                <td> {{ item.authority_name }} - {{ item.authority_email }}</td>
+                <td class="font-weight-bold">
+                  {{ item.step }}<span *ngIf="item.step == 1">st</span><span *ngIf="item.step == 2">nd</span><span *ngIf="item.step == 3">rd</span>
+                </td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Modify</button>
+                </td>
+              </tr>
+              <tr *ngIf="approvalFlowList.length <= 0">
+                <td colspan="6">No Work Flow added</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ approvalFlowList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<block-ui></block-ui>
+
+<div bsModal #updateStepModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+            <div class="row">
+              <div class="col-lg-12 mt-3">
+                <label for="" class="form-label font-weight-bold"> Employee: {{ show_employee }}</label>
+              </div>
+              <div class="col-md-12 mt-3">
+                  <label for="saturday" class="form-label">Authority (<label class="form-label text-center font-weight-bold"><span>{{ show_step }}</span><span *ngIf="show_step == 1">st</span><span *ngIf="show_step == 2">nd</span><span *ngIf="show_step == 3">rd</span> Step</label>)</label>
+                  <ng-select [items]="approvalAuthorityList" bindLabel="name" 
+                      bindValue="id" formControlName="approval_authority_id" placeholder="Select Authority" 
+                      [ngClass]="{ 'is-invalid': submitted && f.approval_authority_id.errors }" >
+                    </ng-select>
+                  <div *ngIf="submitted && f.approval_authority_id.errors" class="invalid-feedback">
+                      <span *ngIf="f.approval_authority_id.errors.required" class="text-danger"> Authority is required</span>
+                  </div>
+              </div>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmitUpdateStep()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #addStepModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-horizontal">
+            <div class="row">
+              <div class="col-md-6 mt-3">
+                  <label for="company_id" class="form-label">Company</label>
+                  <ng-select [items]="companyList" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="company_id" (change)="onChangeCompany($event)" placeholder="Select Company">
+                  </ng-select>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <label for="branch_id" class="form-label">Branch</label>
+                  <ng-select [items]="branchList" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="branch_id" (change)="onChangeBranch($event)" placeholder="Select Branch">
+                  </ng-select>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <label for="department_id" class="form-label">Department</label>
+                  <ng-select [items]="departmentList" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="department_id" (change)="onChangeDepartment($event)" placeholder="Select Department">
+                  </ng-select>
+              </div>
+              <div class="col-md-6 mt-3">
+                  <label for="designation_id" class="form-label">Designation</label>
+                  <ng-select [items]="designationList" bindLabel="title" 
+                      bindValue="id" [(ngModel)]="designation_id" (change)="onChangeDesignation($event)" placeholder="Select Designation">
+                  </ng-select>
+              </div>
+
+              <div class="col-md-12 mt-3">
+                  <label for="employee_ids" class="form-label">Employee(s)</label>
+                  <ng-select [items]="employeeList" [selectOnTab]="true" [multiple]="true" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="employee_ids" placeholder="Select Employee">
+                      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                          <span><strong>{{ item.name }} - {{item.mobile}} - {{item.email}}</strong></span>
+                      </ng-template>
+                  </ng-select>
+              </div>
+
+              <div class="col-md-12 mt-3">
+                  <label for="steps" class="form-label">Step(s)</label>
+                  <ng-select [items]="steps" (change)="onChangeStep($event)" bindLabel="value" 
+                      bindValue="id" [(ngModel)]="step" placeholder="Select Step">
+                  </ng-select>
+              </div>
+
+              <div class="col-md-4 mt-3" *ngIf="number_of_step >= 1">
+                  <label for="first_step" class="form-label">1st Step</label>
+                  <ng-select [items]="approvalAuthorityList" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="first_step" placeholder="Select Authority">
+                  </ng-select>
+              </div>
+
+              <div class="col-md-4 mt-3" *ngIf="number_of_step >= 2">
+                  <label for="second_step" class="form-label">2nd Step</label>
+                  <ng-select [items]="approvalAuthorityList" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="second_step" placeholder="Select Authority">
+                  </ng-select>
+              </div>
+
+              <div class="col-md-4 mt-3" *ngIf="number_of_step >= 3">
+                  <label for="third_step" class="form-label">3rd Step</label>
+                  <ng-select [items]="approvalAuthorityList" bindLabel="name" 
+                      bindValue="id" [(ngModel)]="third_step" placeholder="Select Authority">
+                  </ng-select>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-info" (click)="onSubmitFlow()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

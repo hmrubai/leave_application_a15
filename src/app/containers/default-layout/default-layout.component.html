@@ -1,0 +1,45 @@
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true"
+  [navbarBrandFull]="{src: 'assets/img/logo_bacbon.png', width: 120, height: 30, alt: 'BBL'}"
+  [navbarBrandMinimized]="{src: 'assets/img/min_logo.png', width: 30, height: 30, alt: 'BBL'}"
+  [sidebarToggler]="'sm'" [asideMenuToggler]="'sm'">
+  <ul class="nav navbar-nav ml-auto mr-5">
+    <!--<li class="nav-item d-md-down-none">
+      <a class="nav-link" href="#"><i class="icon-bell"></i><span class="badge badge-pill badge-danger">5</span></a>
+    </li>-->
+    <li class="nav-item dropdown" dropdown placement="bottom right">
+      <a class="nav-link d-none d-lg-block" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
+        dropdownToggle (click)="false">
+        <img src="{{ profile_image }}" class="img-avatar" alt="" /> {{ currentUser.full_name }}
+      </a>
+      <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
+        <div class="dropdown-header text-center"><strong>Account</strong></div>
+        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" [routerLink]="['/master-settings/change-password']" ><i class="fa fa-wrench"></i> Change Password</a>
+        <a class="dropdown-item" (click)="userLogout()"><i class="fa fa-lock"></i> Logout</a>
+      </div>
+    </li>
+  </ul>
+</app-header>
+<div class="app-body">
+  <app-sidebar #appSidebar [fixed]="true" [display]="'xl'" [minimized]="sidebarMinimized"
+    (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+
+  <main class="main">
+    <cui-breadcrumb>
+      <li class="breadcrumb-menu d-md-down-none">
+        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        </div>
+      </li>
+    </cui-breadcrumb>
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>
+<app-footer>
+  <span><a href="https://bacbonltd.com/">BacBon Limited.</a> &copy; 2023.</span>
+  <span class="ml-auto">Powered by <a href="https://bacbonltd.com/">BacBon Limited.</a></span>
+</app-footer>

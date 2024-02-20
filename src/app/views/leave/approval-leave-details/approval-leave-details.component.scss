@@ -1,0 +1,33 @@
+.align-items-center {
+    align-items: center !important;
+}
+
+.login-div {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+.image-div{
+    padding: 5px;
+    width: 100%;
+    border: 5px solid #c1c1c1;
+    border-radius: 5px;
+}
+
+.approve-button{
+    width: 49% !important;
+    color: #fff;
+    background-color: #0a762f !important;
+    border-color: #0a762f !important;
+    font-weight: 600 !important;
+}
+
+.reject-button{
+    width: 49% !important;
+    color: #fff;
+    background-color: #c20100 !important;
+    border-color: #c20100 !important;
+    font-weight: 600 !important;
+}

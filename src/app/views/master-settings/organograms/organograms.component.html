@@ -1,0 +1,359 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header bg-primary">
+        <h5><i class="fa fa-list"></i> Organogram</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-12 mb-5 text-center">
+            <div class="tree mt-4 text-center">
+              <ul>
+                <li>
+                <a href="#">Managing Director</a>
+                <ul>
+                    <li>
+                        <a href="#">CEO</a>
+                        <ul>
+                            <li>
+                                <a href="#">CTO</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Tech Lead</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Senior Software Engineer</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Software Engineer</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">UI/UX Designer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Director HRM</a>
+                        <ul>
+                            <li><a href="#">Senior HR</a></li>
+                            <li>
+                                <a href="#">Manager</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Senior Officer</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Officer</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Research Associate</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="#">Manager 2</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--<table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Contact No</th>
+                <th>Company Email</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of companyList; let i = index;">
+                <td>{{ item.name }}</td>
+                <td>{{ item.address ? item.address : '-' }}</td>
+                <td>{{ item.contact_no }}</td>
+                <td>{{ item.company_email }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                </td>
+              </tr>
+              <tr *ngIf="companyList.length <= 0">
+                <td colspan="5">No Company added</td>
+              </tr>
+            </tbody>
+          </table>-->
+      </div>
+      <div class="card-footer">{{ companyList.length }} Rows</div>
+    </div>
+  </div>
+</div>
+<block-ui></block-ui>
+
+<div
+  bsModal
+  #addCompanyModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-info modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button
+          type="button"
+          class="close"
+          (click)="modalHide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <form [formGroup]="entryForm" class="form-horizontal">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="text-input"
+              >Company Name</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="name"
+                [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                id="text-input"
+                name="text-input"
+                class="form-control"
+                placeholder="Company Name"
+              />
+              <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
+                <span *ngIf="f.name.errors.required" class="text-danger">
+                  Name is required</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="textarea-input"
+              >Address</label
+            >
+            <div class="col-md-9">
+              <textarea
+                id="textarea-input"
+                formControlName="address"
+                [ngClass]="{ 'is-invalid': submitted && f.address.errors }"
+                name="textarea-input"
+                rows="3"
+                class="form-control"
+                placeholder="Address.."
+              ></textarea>
+              <div
+                *ngIf="submitted && f.address.errors"
+                class="invalid-feedback"
+              >
+                <span *ngIf="f.address.errors.required" class="text-danger">
+                  Name is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="contact_no"
+              >Contact No</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="contact_no"
+                [ngClass]="{ 'is-invalid': submitted && f.contact_no.errors }"
+                id="contact_no"
+                class="form-control"
+                placeholder="Contact No"
+              />
+              <div
+                *ngIf="submitted && f.contact_no.errors"
+                class="invalid-feedback"
+              >
+                <span *ngIf="f.contact_no.errors.required" class="text-danger">
+                  Contact No is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="company_email"
+              >Company Email</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="company_email"
+                [ngClass]="{
+                  'is-invalid': submitted && f.company_email.errors
+                }"
+                id="company_email"
+                class="form-control"
+                placeholder="Company Email"
+              />
+              <div
+                *ngIf="submitted && f.company_email.errors"
+                class="invalid-feedback"
+              >
+                <span
+                  *ngIf="f.company_email.errors.required"
+                  class="text-danger"
+                >
+                  Company Email is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="hr_email"
+              >HR Email</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="hr_email"
+                [ngClass]="{ 'is-invalid': submitted && f.hr_email.errors }"
+                id="hr_email"
+                class="form-control"
+                placeholder="HR Email"
+              />
+              <div
+                *ngIf="submitted && f.hr_email.errors"
+                class="invalid-feedback"
+              >
+                <span *ngIf="f.hr_email.errors.required" class="text-danger">
+                  HR Email is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="leave_email"
+              >Leave Email</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="leave_email"
+                [ngClass]="{ 'is-invalid': submitted && f.leave_email.errors }"
+                id="leave_email"
+                class="form-control"
+                placeholder="Leave Email"
+              />
+              <div
+                *ngIf="submitted && f.leave_email.errors"
+                class="invalid-feedback"
+              >
+                <span *ngIf="f.leave_email.errors.required" class="text-danger">
+                  Leave Email is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="employee_code_length"
+              >Employee Code Length</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="employee_code_length"
+                [ngClass]="{
+                  'is-invalid': submitted && f.employee_code_length.errors
+                }"
+                id="employee_code_length"
+                class="form-control"
+                placeholder="Employee Code Length"
+              />
+              <div
+                *ngIf="submitted && f.employee_code_length.errors"
+                class="invalid-feedback"
+              >
+                <span
+                  *ngIf="f.employee_code_length.errors.required"
+                  class="text-danger"
+                >
+                  Employee Code Length is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="company_prefix"
+              >Company Prefix</label
+            >
+            <div class="col-md-9">
+              <input
+                type="text"
+                formControlName="company_prefix"
+                [ngClass]="{
+                  'is-invalid': submitted && f.company_prefix.errors
+                }"
+                id="company_prefix"
+                class="form-control"
+                placeholder="Company Prefix"
+              />
+              <div
+                *ngIf="submitted && f.company_prefix.errors"
+                class="invalid-feedback"
+              >
+                <span
+                  *ngIf="f.company_prefix.errors.required"
+                  class="text-danger"
+                >
+                  Company Prefix is required</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="leave_email"
+              >Logo</label
+            >
+            <div class="col-md-9">
+              <input
+                type="file"
+                formControlName="company_logo"
+                (change)="onSelectFile($event)"
+                placeholder="Upload file"
+                accept="image/x-png,image/jpeg"
+                placeholder="Select file"
+              />
+            </div>
+          </div>
+
+          <!--<div class="form-group row">
+                <label class="col-md-3 col-form-label">Is Active</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" formControlName="is_active" type="checkbox" id="is_active">
+                        <label class="form-check-label" for="is_active">Active</label>
+                    </div>
+                </div>
+            </div>-->
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">
+          Close
+        </button>
+        <button type="button" class="btn btn-info" (click)="onFormSubmit()">
+          {{ btnSaveText }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
