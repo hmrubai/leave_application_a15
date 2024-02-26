@@ -98,6 +98,11 @@ export const routes: Routes = [
       },
       {
         path: 'master-settings',
+        loadChildren: () => import('./views/master-settings/hsep-balance-settings/hsep-balance-settings.module').then(m => m.HsepBalanceSettingsModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'master-settings',
         loadChildren: () => import('./views/master-settings/employee/employee.module').then(m => m.EmployeeModule),
         canActivate: [AuthGuard]
       },

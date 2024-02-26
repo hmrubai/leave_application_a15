@@ -150,6 +150,12 @@ export const navItems: INavData[] = [
                 role: 'Admin,SuperAdministrator'
             },
             {
+                name: 'HSEP Balance Setup',
+                url: '/master-settings/hsep-balance-settings',
+                icon: 'icon-wallet',
+                role: 'Admin,SuperAdministrator'
+            },
+            {
                 name: 'Approval Flow Setup',
                 url: '/leave/approval-work-flow-setup',
                 icon: 'icon-organization',
