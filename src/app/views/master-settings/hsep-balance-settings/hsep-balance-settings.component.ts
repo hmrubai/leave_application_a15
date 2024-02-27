@@ -17,11 +17,12 @@ import {ModalDirective} from 'ngx-bootstrap/modal';
 })
 export class HsepBalanceSettingsComponent implements OnInit {
     @ViewChild('addFiscalYearModal') public addFiscalYearModal: ModalDirective;
+    @ViewChild('addHsepBalanceModal') public addHsepBalanceModal: ModalDirective;
     branchForm: UntypedFormGroup;
     submitted = false;
     returnUrl: string;
 
-    modalTitle = 'Add New Monthly Balances';
+    modalTitle = 'Add New Monthly Balance';
     btnSaveText = 'Save';
 
     currentUser: any = null;
@@ -55,7 +56,7 @@ export class HsepBalanceSettingsComponent implements OnInit {
         });
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         //this.getCompanyList();
-        //this.getFiscalYearList()
+        this.addHsepBalance()
     }
 
     get f() {
@@ -76,8 +77,17 @@ export class HsepBalanceSettingsComponent implements OnInit {
         );
     }
 
+    addHsepBalance(){
+        //admin/add-hsep-balance
+        this._service.get('admin/add-hsep-balance').subscribe(res => {
+            console.log(res.data);
+            //this.fiscalYearList = res.data;
+        }, err => { }
+        );
+    }
+
     editItem(item){
-        this.modalTitle = 'Update Balance';
+        this.modalTitle = 'Update Monthly Balances';
         this.btnSaveText = 'Update';
 
         this.branchForm.controls['id'].setValue(item.id);
@@ -117,10 +127,11 @@ export class HsepBalanceSettingsComponent implements OnInit {
 
     modalHide() {
         this.addFiscalYearModal.hide();
+        this.addHsepBalanceModal.hide();
         this.branchForm.reset();
         this.submitted = false;
         this.branchForm.controls['is_active'].setValue(true);
-        this.modalTitle = 'Add New Balance';
+        this.modalTitle = 'Add New Monthly Balance';
         this.btnSaveText = 'Save';
     }
 
