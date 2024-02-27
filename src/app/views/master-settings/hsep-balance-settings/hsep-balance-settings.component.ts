@@ -27,8 +27,7 @@ export class HsepBalanceSettingsComponent implements OnInit {
 
     currentUser: any = null;
 
-    companyList: Array<any> = [];
-    fiscalYearList: Array<any> = [];
+    balanceList: Array<any> = [];
 
     @BlockUI() blockUI: NgBlockUI;
 
@@ -55,82 +54,48 @@ export class HsepBalanceSettingsComponent implements OnInit {
             is_active: [true],
         });
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-        //this.getCompanyList();
-        this.addHsepBalance()
+        this.getBalanceHistory();
     }
 
     get f() {
         return this.branchForm.controls;
     }
 
-    getCompanyList() {
-        this._service.get('admin/company-list').subscribe(res => {
-            this.companyList = res.data;
-        }, err => { }
-        );
-    }
-
-    getFiscalYearList() {
-        this._service.get('admin/fiscal-year-list').subscribe(res => {
-            this.fiscalYearList = res.data;
-        }, err => { }
-        );
+    getBalanceHistory() {
+        this.blockUI.start('Loading...')
+        this._service.get('admin/hsep-balance-history').subscribe(res => {
+            this.balanceList = res.data;
+            this.blockUI.stop();
+        }, err => {
+            this.blockUI.stop();
+        });
     }
 
     addHsepBalance(){
-        //admin/add-hsep-balance
-        this._service.get('admin/add-hsep-balance').subscribe(res => {
-            console.log(res.data);
-            //this.fiscalYearList = res.data;
-        }, err => { }
-        );
-    }
-
-    editItem(item){
-        this.modalTitle = 'Update Monthly Balances';
-        this.btnSaveText = 'Update';
-
-        this.branchForm.controls['id'].setValue(item.id);
-        this.branchForm.controls['fiscal_year'].setValue(item.fiscal_year);
-        this.branchForm.controls['company_id'].setValue(item.company_id);
-        this.branchForm.controls['start_date'].setValue(item.start_date);
-        this.branchForm.controls['end_date'].setValue(item.end_date);
-        this.branchForm.controls['is_active'].setValue(item.is_active);
-        this.addFiscalYearModal.show();
-    }
-
-    onFormSubmit(){
-        this.submitted = true;
-        if (this.branchForm.invalid) {
-            return;
-        }
-
-        this.branchForm.value.id ? this.blockUI.start('Saving...') : this.blockUI.start('Updating...');
-
-        this._service.post('admin/fiscal-year-save-or-update', this.branchForm.value).subscribe(
+        this.blockUI.start('Updating...')
+        this._service.post('admin/add-hsep-balance', []).subscribe(
             data => {
                 this.blockUI.stop();
                 if (data.status) {
                     this.toastr.success(data.message, 'Success!', { timeOut: 2000 });
                     this.modalHide();
-                    this.getFiscalYearList();
+                    this.getBalanceHistory();
                 } else {
                     this.toastr.error(data.message, 'Error!', { timeOut: 2000 });
+                    this.modalHide();
                 }
             },
             err => {
                 this.blockUI.stop();
                 this.toastr.error(err.message || err, 'Error!', { timeOut: 2000 });
+                this.modalHide();
             }
         );
     }
 
     modalHide() {
-        this.addFiscalYearModal.hide();
         this.addHsepBalanceModal.hide();
-        this.branchForm.reset();
         this.submitted = false;
-        this.branchForm.controls['is_active'].setValue(true);
         this.modalTitle = 'Add New Monthly Balance';
         this.btnSaveText = 'Save';
     }

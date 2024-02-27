@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 // import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { NgSelectModule } from '@ng-select/ng-select';
 import {SharedModule} from '../../../core/shared.module';
+import { BlockUIModule } from 'ng-block-ui';
 
 import { HsepBalanceSettingsComponent } from './hsep-balance-settings.component';
 import { HsepBalanceSettingsRoutingModule } from './hsep-balance-settings-routing.module';
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common';
     NgSelectModule,
     ReactiveFormsModule,
     SharedModule,
+    BlockUIModule,
     HsepBalanceSettingsRoutingModule
   ],
   declarations: [ HsepBalanceSettingsComponent ]
