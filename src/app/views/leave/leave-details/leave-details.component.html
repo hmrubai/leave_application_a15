@@ -84,7 +84,7 @@
                                         </tr>
                                         <tr>
                                             <td>Applied For</td>
-                                            <td><strong>{{ leaveDetails.leave.total_applied_days }} Days</strong></td>
+                                            <td><strong>{{ leaveDetails.leave.total_applied_days | number : '1.2-2' }} Days</strong></td>
                                         </tr>
                                         <tr>
                                             <td>Is Half Day</td>
@@ -178,10 +178,10 @@
                                         <tbody>
                                             <tr *ngFor="let item of leaveDetails.leave_balances; let i = index;">
                                                 <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
-                                                <td>{{ item.total_days }}</td>
-                                                <td>{{ item.availed_days ? item.availed_days : '-' }}</td>
+                                                <td>{{ item.total_days | number : '1.2-2' }}</td>
+                                                <td>{{ item.availed_days | number : '1.2-2' }}</td>
                                                 <td>
-                                                    {{ item.remaining_days ? item.remaining_days : '-' }}
+                                                    {{ item.remaining_days | number : '1.2-2' }}
                                                     <button class="btn btn-warning btn-sm ml-2" *ngIf="item.has_cutting_history"(click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-eye"></i></button>
                                                 </td>
                                             </tr>

@@ -151,7 +151,7 @@ export const navItems: INavData[] = [
             },
             {
                 name: 'HSEP Balance Setup',
-                url: '/master-settings/hsep-balance-settings',
+                url: '/leave/hsep-balance-settings',
                 icon: 'icon-wallet',
                 role: 'Admin,SuperAdministrator'
             },

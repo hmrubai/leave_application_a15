@@ -221,9 +221,9 @@
                                 <tbody>
                                     <tr *ngFor="let item of leaveBalanceList; let i = index;">
                                         <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
-                                        <td>{{ item.total_days }}</td>
-                                        <td>{{ item.availed_days ? item.availed_days : '-' }}</td>
-                                        <td>{{ item.remaining_days ? item.remaining_days : '-' }}</td>
+                                        <td>{{ item.total_days | number : '1.2-2' }}</td>
+                                        <td>{{ item.availed_days | number : '1.2-2' }}</td>
+                                        <td>{{ item.remaining_days | number : '1.2-2' }}</td>
                                     </tr>
                                     <tr *ngIf="leaveBalanceList.length <= 0">
                                         <td colspan="4">No Leave Balance added</td>
