@@ -495,6 +495,7 @@ export class EmployeeComponent implements OnInit {
         //this.entryForm.controls['image'].setValue(item.image);
         this.entryForm.controls['user_type'].setValue(item.user_type);
         this.entryForm.controls['is_active'].setValue(item.is_active);
+        this.entryForm.controls['is_hsep'].setValue(item.is_hsep);
         if(item.image){
             this.view_profile_image = environment.imageURL + item.image;
         }else{
