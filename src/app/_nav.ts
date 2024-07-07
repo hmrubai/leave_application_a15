@@ -26,10 +26,10 @@ export const navItems: INavData[] = [
                 role: 'Admin,SuperAdministrator'
             },
             {
-              name: 'Fiscal Year',
-              url: '/master-settings/fiscal-year',
-              icon: 'icon-event',
-              role: 'Admin,SuperAdministrator'
+                name: 'Fiscal Year',
+                url: '/master-settings/fiscal-year',
+                icon: 'icon-event',
+                role: 'Admin,SuperAdministrator'
             },
             {
                 name: 'Branch',
