@@ -128,6 +128,11 @@ export const routes: Routes = [
       },
       {
         path: 'leave',
+        loadChildren: () => import('./views/leave/employee-previous-leave-balance/employee-previous-leave-balance.module').then(m => m.EmployeePreviousLeaveBalanceListModule),
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'leave',
         loadChildren: () => import('./views/leave/my-leave-balance/my-leave-balance.module').then(m => m.MyLeaveBalanceListModule),
         canActivate: [AuthGuard]
       },

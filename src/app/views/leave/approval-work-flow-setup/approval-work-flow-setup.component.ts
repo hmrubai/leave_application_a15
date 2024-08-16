@@ -364,7 +364,12 @@ export class ApprovalWorkFlowSetupComponent implements OnInit {
                 if (data.status) {
                     this.toastr.success(data.message, 'Success!', { timeOut: 2000 });
                     this.modalHide();
-                    this.getApprovalFlowList();
+                    if(this.employee_id){
+                        let emp = { id: this.employee_id}
+                        this.onChangeEmployee(emp)
+                    }else{
+                        this.getApprovalFlowList();
+                    }
                 } else {
                     this.toastr.error(data.message, 'Error!', { timeOut: 2000 });
                 }
