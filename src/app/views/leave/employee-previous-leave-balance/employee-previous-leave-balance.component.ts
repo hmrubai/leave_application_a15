@@ -33,6 +33,8 @@ export class EmployeePreviousLeaveBalanceListComponent implements OnInit {
     modalTitle = 'Add New Leave Balance';
     btnSaveText = 'Save';
     employee_id = null;
+    fiscal_year_id = null;
+    leave_policy_id = null;
 
     currentUser: any = null;
 
@@ -41,6 +43,7 @@ export class EmployeePreviousLeaveBalanceListComponent implements OnInit {
     employmentList: Array<any> = [];
     explanationList: Array<any> = [];
     fiscalYearList: Array<any> = [];
+    leavePolicyList: Array<any> = [];
     
 
     @BlockUI() blockUI: NgBlockUI;
@@ -81,6 +84,7 @@ export class EmployeePreviousLeaveBalanceListComponent implements OnInit {
 
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         this.getEmployeeList();
+        this.getLeavePolicyList();
         this.getFiscalYearList();
     }
 
@@ -108,14 +112,39 @@ export class EmployeePreviousLeaveBalanceListComponent implements OnInit {
         }
         this.leaveBalanceList = [];
         if(this.employee_id){
+
+            let param = {
+                employee_id: this.employee_id,
+                fiscal_year_id: this.fiscal_year_id,
+                leave_policy_id: this.leave_policy_id,
+            }
+
+            //admin/previous-leave-balance-list
             this.blockUI.start('Loading...');
-            this._service.get('admin/leave-balance-list/' + this.employee_id).subscribe(res => {
+            this._service.get('admin/previous-leave-balance-list', param).subscribe(res => {
                 this.leaveBalanceList = res.data.balance_list;
                 this.blockUI.stop();
             }, err => { 
                 this.blockUI.stop();
             });
         }
+    }
+
+    onChangeLeaveType($event){
+        // fiscal_year_id = null;
+        // leave_policy_id = null;
+        console.log($event)
+    }
+
+    onChangeFiscalYear($event){
+        console.log($event)
+    }
+
+    getLeavePolicyList() {
+        this._service.get('leave/user-policy-list').subscribe(res => {
+            this.leavePolicyList = res.data;
+        }, err => { }
+        );
     }
 
     getEmployeeList(){

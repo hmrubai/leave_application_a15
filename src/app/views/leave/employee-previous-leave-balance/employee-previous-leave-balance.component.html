@@ -3,11 +3,23 @@
       <div class="card">
         <div class="card-header bg-primary">
           <h5><i class="fa fa-list"></i> Previous Leave Balance List</h5> 
-          <button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addBalanceModal.show()"><i class="fa fa-plus"></i> Add Leave Balance</button>
+          <!--<button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addBalanceModal.show()"><i class="fa fa-plus"></i> Add Leave Balance</button>-->
           <ng-select [items]="employeeList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
             bindValue="id" [(ngModel)]="employee_id" (change)="onChangeEmployee($event)" placeholder="Select Employee">
                 <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                     <span><strong>{{ item.name }} - {{item.email}}</strong></span>
+                </ng-template>
+          </ng-select>
+          <ng-select [items]="leavePolicyList" bindLabel="leave_title" class="col-lg-2 form-control-sm float-right fs-top"
+            bindValue="id" [(ngModel)]="leave_policy_id" (change)="onChangeLeaveType($event)" placeholder="Select Leave Type">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <span><strong>{{ item.leave_short_code }} - {{ item.leave_title }}</strong></span>
+                </ng-template>
+          </ng-select>
+          <ng-select [items]="fiscalYearList" bindLabel="fiscal_year" class="col-lg-2 form-control-sm float-right fs-top"
+            bindValue="id" [(ngModel)]="fiscal_year_id" (change)="onChangeFiscalYear($event)" placeholder="Select Fiscal Year">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <span><strong>{{ item.fiscal_year }}</strong></span>
                 </ng-template>
           </ng-select>
         </div>
@@ -29,8 +41,8 @@
                 <td>{{ item.availed_days | number : '1.2-2' }}</td>
                 <td>{{ item.remaining_days | number : '1.2-2' }}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
-                    <button class="btn btn-warning btn-sm ml-1 mr-1" (click)="editLeaveBalanceItem(item)"><i class="fa fa-cut"></i> Cut</button>
+                    <!--<button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                    <button class="btn btn-warning btn-sm ml-1 mr-1" (click)="editLeaveBalanceItem(item)"><i class="fa fa-cut"></i> Cut</button>-->
                     <button class="btn btn-warning btn-sm" *ngIf="item.has_cutting_history" (click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-eye"></i></button>
                 </td>
               </tr>
