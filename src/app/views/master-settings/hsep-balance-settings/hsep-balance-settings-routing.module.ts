@@ -8,7 +8,7 @@ const routes: Routes = [
     path: 'hsep-balance-settings',
     component: HsepBalanceSettingsComponent,
     data: {
-      title: 'HSEP Balance'
+      title: 'Auto Balance'
     }
   }
 ];
