@@ -6,11 +6,12 @@
           <!--<button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addApplyForLeaveModal.show()"><i class="fa fa-paper-plane"></i> Apply For a Leave</button>-->
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-sm">
             <thead>
               <tr>
                 <th>Applicant</th>
                 <th>Leave Type</th>
+                <th>Applied Date</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Applied For</th>
@@ -22,10 +23,11 @@
             <tbody>
               <tr *ngFor="let item of applicationList; let i = index;">
                 <td>{{ item.employee_name }}</td>
-                <td>{{ item.leave_title }}</td>
-                <td>{{ item.start_date | date:'dd/MM/y'}}</td>
-                <td>{{ item.end_date | date:'dd/MM/y' }}</td>
-                <td>{{ item.total_applied_days }} Days</td>
+                <td><strong>{{ item.leave_title }}</strong></td>
+                <td>{{ item.created_at | date:'dd/MM/y'}}</td>
+                <td class="text-hilighted-bg"><strong>{{ item.start_date | date:'dd/MM/y'}}</strong></td>
+                <td class="text-hilighted-bg"><strong>{{ item.end_date | date:'dd/MM/y' }}</strong></td>
+                <td><strong>{{ item.total_applied_days }}</strong> Days</td>
                 <td>
                     <span *ngIf="item.is_half_day" class="status bg-success">Yes ({{ item.half_day }})</span>
                     <span *ngIf="!item.is_half_day" class="status bg-secondary">No</span>
@@ -41,7 +43,7 @@
                 </td>
               </tr>
               <tr *ngIf="applicationList.length <= 0">
-                <td colspan="8">No Leave Found!</td>
+                <td colspan="9">No Leave Found!</td>
               </tr>
             </tbody>
           </table>

@@ -18,7 +18,7 @@
                                     <img src="{{ profile_image }}" class="image-div" alt="">
                                 </div>
                                 <div class="col-sm-8 table-responsive">
-                                    <table class="table table-bordered" *ngIf="is_loaded">
+                                    <table class="table table-bordered table-sm" *ngIf="is_loaded">
                                         <tr>
                                             <th>Applicant's Name</th>
                                             <th>{{ leaveDetails.employee.name }}</th>
@@ -69,7 +69,7 @@
                         <div class="card-body text-primary">
                             <div class="row">
                                 <div class="col-sm-12 table-responsive">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered table-sm">
                                         <tr>
                                             <td>Leave Type</td>
                                             <td><strong>{{ leaveDetails.leave.leave_title }}</strong></td>
@@ -125,7 +125,7 @@
                         <div class="card-body text-dark">
                             <div class="row">
                                 <div class="col-sm-12 table-responsive">
-                                    <table class="table table-bordered" *ngIf="is_loaded">
+                                    <table class="table table-bordered table-sm" *ngIf="is_loaded">
                                         <thead>
                                             <tr>
                                                 <th>Authority</th>
@@ -166,7 +166,7 @@
                         <div class="card-body text-dark">
                             <div class="row">
                                 <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered table-sm">
                                         <thead>
                                             <tr>
                                                 <th>Leave Type</th>

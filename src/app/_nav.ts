@@ -173,7 +173,7 @@ export const navItems: INavData[] = [
         icon: 'icon-directions',
         children: [
             {
-                name: 'My Leave Applications',
+                name: 'My Leave',
                 url: '/leave/apply-for-leave',
                 icon: 'icon-share-alt',
                 role: 'Admin,SuperAdministrator,Employee,ApprovalAuthority',

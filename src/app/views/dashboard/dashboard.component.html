@@ -100,14 +100,15 @@
     
 
     <div class="col-lg-12" *ngIf="user_role != 'Employee'">
-      <div class="card border-top-primary border-top-3 mb-3">
-          <div class="card-header bg-primary card-title"><strong>Subordinate leave list</strong></div>
+      <div class="card border-top-info border-top-3 mb-3">
+          <div class="card-header bg-success card-title"><strong>Subordinate leave list</strong></div>
           <div class="card-body text-dark table-responsive" *ngIf="is_list_loaded">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-sm">
               <thead>
                 <tr>
                   <th>Applicant</th>
                   <th>Leave Type</th>
+                  <th>Applied Date</th>
                   <th>Start Date</th>
                   <th>End Date</th>
                   <th>Applied For</th>
@@ -119,10 +120,11 @@
               <tbody>
                 <tr *ngFor="let item of subordinateApplicationList | slice:0:3; let i = index;">
                   <td>{{ item.employee_name }}</td>
-                  <td>{{ item.leave_title }}</td>
-                  <td>{{ item.start_date | date:'dd/MM/y'}}</td>
-                  <td>{{ item.end_date | date:'dd/MM/y' }}</td>
-                  <td>{{ item.total_applied_days }} Days</td>
+                  <td><strong>{{ item.leave_title }}</strong></td>
+                  <td>{{ item.created_at | date:'dd/MM/y'}}</td>
+                  <td class="text-hilighted-bg"><strong>{{ item.start_date | date:'dd/MM/y'}}</strong></td>
+                  <td class="text-hilighted-bg"><strong>{{ item.end_date | date:'dd/MM/y' }}</strong></td>
+                  <td><strong>{{ item.total_applied_days }}</strong> Days</td>
                   <td>
                       <span *ngIf="item.is_half_day" class="status bg-success">Yes ({{ item.half_day }})</span>
                       <span *ngIf="!item.is_half_day" class="status bg-secondary">No</span>
@@ -137,7 +139,7 @@
                   </td>
                 </tr>
                 <tr *ngIf="subordinateApplicationList.length <= 0">
-                  <td colspan="8">No Leave Found!</td>
+                  <td colspan="9">No Leave Found!</td>
                 </tr>
               </tbody>
             </table>
@@ -152,7 +154,7 @@
 
     <div class="col-lg-6">
       <div class="card border-top-primary border-top-3 mb-3">
-          <div class="card-header bg-primary card-title"><strong>Academic Calendar</strong></div>
+          <div class="card-header bg-success card-title"><strong>Academic Calendar</strong></div>
           <div class="card-body text-dark table-responsive" *ngIf="is_calender_loaded">
             <ngx-fullcalendar #theCalendar defaultView="month" [events]="events" [options]="options"></ngx-fullcalendar>
           </div>
@@ -162,11 +164,11 @@
       <div class="row">
         <div class="col-lg-12">
             <div class="card border-top-primary border-top-3 mb-3">
-                <div class="card-header bg-primary card-title"><strong>My Leave list</strong></div>
+                <div class="card-header bg-success card-title"><strong>My Leave list</strong></div>
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-sm">
                               <thead>
                                 <tr>
                                   <th>Type</th>
@@ -205,11 +207,11 @@
         </div>
         <div class="col-lg-12">
             <div class="card border-top-primary border-top-3 mb-3">
-                <div class="card-header bg-primary card-title"><strong>My Leave Balance</strong></div>
+                <div class="card-header bg-success card-title"><strong>My Leave Balance</strong></div>
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered table-sm">
                                 <thead>
                                     <tr>
                                         <th>Leave Type</th>

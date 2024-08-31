@@ -21,11 +21,12 @@
           
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-sm">
             <thead>
               <tr>
                 <th>Applicant</th>
                 <th>Leave Type</th>
+                <th>Applied Date</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Applied For</th>
@@ -37,9 +38,10 @@
             <tbody>
               <tr *ngFor="let item of applicationList; let i = index;">
                 <td>{{ item.employee_name }}</td>
-                <td>{{ item.leave_title }}</td>
-                <td>{{ item.start_date | date:'dd/MM/y'}}</td>
-                <td>{{ item.end_date | date:'dd/MM/y' }}</td>
+                <td><strong>{{ item.leave_title }}</strong></td>
+                <td><strong>{{ item.created_at | date:'dd/MM/y'}}</strong></td>
+                <td><strong>{{ item.start_date | date:'dd/MM/y'}}</strong></td>
+                <td><strong>{{ item.end_date | date:'dd/MM/y' }}</strong></td>
                 <td>{{ item.total_applied_days }} Days</td>
                 <td>
                     <span *ngIf="item.is_half_day" class="status bg-success">Yes ({{ item.half_day }})</span>

@@ -199,10 +199,10 @@ export class EmployeeLeaveBalanceListComponent implements OnInit {
         let total_days = this.entryForm.value.total_days;
         let availed_days = this.entryForm.value.availed_days;
         let remaining_days = this.entryForm.value.remaining_days;
-        if(total_days < (availed_days + remaining_days) || total_days > (availed_days + remaining_days)){
-            this.toastr.warning("Please, enter correct value", 'Attention!', { timeOut: 2000 });
-            return;
-        }
+        // if(total_days < (availed_days + remaining_days) || total_days > (availed_days + remaining_days)){
+        //     this.toastr.warning("Please, enter correct value", 'Attention!', { timeOut: 2000 });
+        //     return;
+        // }
 
         this.entryForm.value.id ? this.blockUI.start('Saving...') : this.blockUI.start('Updating...');
 

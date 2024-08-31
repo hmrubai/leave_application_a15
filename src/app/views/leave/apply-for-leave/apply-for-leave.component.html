@@ -4,9 +4,10 @@
         <div class="card-header bg-primary">
           <h5><i class="fa fa-list"></i> Applied Leave List</h5>
           <button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addApplyForLeaveModal.show()"><i class="fa fa-paper-plane"></i> Apply</button>
+          <button class="btn btn-square btn-warning btn-sm btn-sm-custom float-right mr-2" (click)="LeavePolicyModal.show()"><i class="fa fa-file-text"></i> Leave Ploicy</button>
         </div>
         <div class="card-body table-responsive">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-sm">
             <thead>
               <tr>
                 <th>Leave Type</th>
@@ -151,6 +152,101 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
         <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div bsModal #LeavePolicyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-warning modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          Leave Policy of BacBon Limited (Effective from 1st April 2022).
+        </h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <ol>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;"><strong>Annual leave</strong> will be available after 01 years of service. After one year of service, an employee will get 1.11 days <strong>AL</strong> per month, considering 01 day&apos;s leave for every 18 days of work.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">An employee must apply for AL at least 02-day in advance.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;"><strong>AL</strong> will be carried forward.</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;"><strong>Casual leave</strong> is available from the beginning of the employment. An employee is entitled to 0.83-day <strong>CL</strong> every month. <strong>CL</strong> is only applicable for any acceptable emergency case. <strong>CL</strong> is not available for the consecutive days.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;"><strong>Sick leave</strong> is available from the beginning of the employment. An employee is entitled to 1.17-day <strong>SL</strong> every month. When applying for <strong>SL</strong> for more than 03 days, an employee must produce medical documents.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;"><strong>Casual and sick leave</strong> will not be carried forward. It will be replenished at the end of every December.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">If an employee is sick, injured, or unable to work, he/she must notify the supervisor &amp; HRD preferably by SMS, by 9.0 a.m. on the ﬁrst day of absence. Employees should state the causes for his/her absence.</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Employees should apply for leave of absence to the supervisor immediately (within 24 hours) for approval, and the supervisor should forward it to HRD.</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Employees should check medical advice for sickness, injury, or contact with a contagious disease whenever possible. BacBon Ltd. maintains the right to ask an employee to consult a doctor during any medical absence and notify the insurance company for the medical benefits.</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Any false statement an employee makes regarding absences due to medication incapacity or contact with contagious diseases may lead to an investigation. BacBon Ltd. may take disciplinary action in the event of falsifying sickness information.</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">An employee can apply for a maximum 10-day leave in Liu (in exchange for working on a holiday) in a calendar year.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">An employee can request for a maximum 10-day home/remote office for a calendar year for personal reason maintaining top most security of company documents and accessories. An employee must approve a concrete plan &amp; action with supervisor or manager for home office days and must submit an everyday report to the supervisor/manager including HRD. Applicable reasons for home office request might be a visit outside of the country, natural disaster, risk of spreading contagious disease, etc. &nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">A female employee will get 120-day maternity leave (maximum) fulfilling the following conditions:</span></p>
+              </li>
+            </ol>
+            <ul>
+              <li style="list-style-type:disc;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Work tenure in the company must be at least 6 months.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:disc;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Have not more than two children&nbsp;</span></p>
+              </li>
+            </ul>
+            <ol start="14">
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">During maternity leave, every month an employee will get 50% of gross payment deducting conveyance amount. After the end of the maternity leave and resuming the job, rest 50% of the monthly pay will be paid upon production of childbirth proof with the application.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">A male employee will get maximum 7-day paternity leave including holidays</span></p>
+              </li>
+            </ol>
+            <ul>
+              <li style="list-style-type:disc;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Work tenure in the company must be at least 6 months.&nbsp;</span></p>
+              </li>
+              <li style="list-style-type:disc;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">Have not more than two children&nbsp;</span></p>
+              </li>
+            </ul>
+            <ol start="16">
+              <li style="list-style-type:decimal;font-size:11pt;">
+                <p style="text-align: justify;"><span style="font-size:11pt;">An employee will get maximum 7-day wedding leave including holidays.</span></p>
+              </li>
+            </ol>
+            <p style="text-align: justify;"><span style="font-size:11pt;">Maternity and paternity leave conditions are not applicable for employed persons in a managerial and administrative roles.&nbsp;</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
       </div>
     </div>
   </div>

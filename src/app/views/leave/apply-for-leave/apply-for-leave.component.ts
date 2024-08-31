@@ -18,6 +18,8 @@ import * as moment from 'moment';
 })
 export class ApplyForLeaveComponent implements OnInit {
     @ViewChild('addApplyForLeaveModal') public addApplyForLeaveModal: ModalDirective;
+    @ViewChild('LeavePolicyModal') public LeavePolicyModal: ModalDirective;
+    
     entryForm: UntypedFormGroup;
     submitted = false;
     returnUrl: string;
@@ -236,6 +238,7 @@ export class ApplyForLeaveComponent implements OnInit {
 
     modalHide() {
         this.addApplyForLeaveModal.hide();
+        this.LeavePolicyModal.hide();
         this.entryForm.reset();
         this.submitted = false;
         this.entryForm.controls['is_half_day'].setValue(false);
