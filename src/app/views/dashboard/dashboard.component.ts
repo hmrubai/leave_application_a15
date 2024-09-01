@@ -102,10 +102,10 @@ export class DashboardComponent implements OnInit {
                 let note = '';
                 if(day.day_note){
                     note = ' | ' + day.day_note
-                    let event_data = { id: 'cd' + day.id, title: day.day_type_title + note, allDay: true, start: day.date, end: day.date, backgroundColor: '#00bcd4', borderColor: '#00bcd4', textColor: '#fff' };
+                    let event_data = { id: 'cd' + day.id, title: day.day_type_title + note, allDay: true, start: day.date, end: day.date, backgroundColor: '#1c2e71', borderColor: '#1c2e71', textColor: '#fff' };
                     this.theCalendar.calendar.addEvent(event_data);
                 }else{
-                    let event_data = { id: 'cd' + day.id, title: day.day_type_title, allDay: true, start: day.date, end: day.date, backgroundColor: '#ffc107', borderColor: '#ffc107', textColor: '#000' };
+                    let event_data = { id: 'cd' + day.id, title: day.day_type_title, allDay: true, start: day.date, end: day.date, backgroundColor: '#1c2e71', borderColor: '#1c2e71', textColor: '#fff' };
                     this.theCalendar.calendar.addEvent(event_data);
                 }
             });
