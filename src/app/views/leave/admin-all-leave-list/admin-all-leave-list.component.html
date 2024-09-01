@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header bg-primary">
+        <div class="card-header bg-blue">
           <h5><i class="fa fa-list"></i> All Leave List</h5>
         </div>
         <div class="card-body table-responsive">
@@ -36,7 +36,7 @@
                     <button type="button"  *ngIf="item.leave_status == 'Withdraw'" class="btn btn-danger btn-sm"><strong>Withdrawn</strong></button>
                 </td>
                 <td>
-                    <button class="btn btn-primary btn-sm" [routerLink]="['/leave/approval-leave-details', item.id ]"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                    <button class="btn btn-blue btn-sm" [routerLink]="['/leave/approval-leave-details', item.id ]"><i class="fa fa-eye"></i>&nbsp;Details</button>
                 </td>
               </tr>
               <tr *ngIf="applicationList.length <= 0">
@@ -54,7 +54,7 @@
 <block-ui></block-ui>
 
 <div bsModal #addApplyForLeaveModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info modal-lg" role="document">
+  <div class="modal-dialog modal-blue modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ modalTitle }}</h4>
@@ -142,7 +142,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header bg-primary">
+        <div class="card-header bg-blue">
             <div class="row">
                 <div class="col-lg-7">
                     <h5><i class="fa fa-users"></i> Employee Information</h5>
@@ -17,7 +17,7 @@
         <div class="card-body table-responsive">
           <table class="table table-bordered table-sm">
             <thead>
-              <tr class="bg-info">
+              <tr class="bg-blue">
                 <th>Image</th>
                 <th>Name</th>
                 <th>Email</th>
@@ -44,7 +44,7 @@
                 </td>
                 <td>
                     <button class="btn btn-success btn-sm mr-1" (click)="openDetailsModal(item)"><i class="fa fa-eye"></i>&nbsp;</button>
-                    <button class="btn btn-primary btn-sm mr-1" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                    <button class="btn btn-blue btn-sm mr-1" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
                     <button class="btn btn-warning btn-sm mr-1" (click)="openChangePasswordModal(item)"><i class="fa fa-lock"></i>&nbsp; Reset</button>
                     <button class="btn btn-danger btn-sm" (click)="openOffboardModal(item, offboardTemplate)"><i class="fa fa-power-off"></i></button>
                 </td>
@@ -64,7 +64,7 @@
 <block-ui></block-ui>
 
 <div bsModal #addEmployeeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info modal-lg" role="document">
+  <div class="modal-dialog modal-blue modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ modalTitle }}</h4>
@@ -225,14 +225,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>
 </div>
 
 <div bsModal #editEmployeeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info modal-lg" role="document">
+  <div class="modal-dialog modal-blue modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ modalTitle }}</h4>
@@ -621,7 +621,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>
@@ -673,7 +673,7 @@
 </ng-template>
 
 <div bsModal #employeeDetailsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info modal-lg" role="document">
+  <div class="modal-dialog modal-blue modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ modalTitle }}</h4>
@@ -741,7 +741,7 @@
                             <td>{{ item.remaining_days | number : '1.2-2' }}</td>
                             <td>
                                 <button class="btn btn-warning btn-sm mr-1" (click)="editLeaveBalanceItem(item)"><i class="fa fa-cut"></i> Cut</button>
-                                <button class="btn btn-info btn-sm" *ngIf="item.has_cutting_history"(click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-list"></i></button>
+                                <button class="btn btn-blue btn-sm" *ngIf="item.has_cutting_history"(click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-list"></i></button>
                             </td>
                         </tr>
                         <tr *ngIf="leaveBalanceList.length <= 0">
@@ -792,7 +792,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onLeaveBalanceFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onLeaveBalanceFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <div class="col-lg-12" *ngIf="user_role == 'Employee'">
       <div class="row">
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-info">
+          <div class="card text-white bg-light">
             <div class="card-body pb-0">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-success">
+          <div class="card text-white bg-light">
             <div class="card-body pb-0">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-warning">
+          <div class="card text-white bg-light">
             <div class="card-body pb-0">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -36,7 +36,7 @@
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-danger">
+          <div class="card text-white bg-light">
             <div class="card-body pb-0">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -52,7 +52,7 @@
     <div class="col-lg-12" *ngIf="user_role != 'Employee' && is_subordinate_summary_loaded">
       <div class="row">
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-info">
+          <div class="card text-white bg-blue">
             <div class="card-body pb-0">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -63,7 +63,7 @@
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-success link-href">
+          <div class="card text-white bg-blue link-href">
             <div class="card-body pb-0" [routerLink]="['/leave/approval-approved-leave-list']">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -74,7 +74,7 @@
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-warning link-href">
+          <div class="card text-white bg-blue link-href">
             <div class="card-body pb-0" [routerLink]="['/leave/approval-pending-leave-list']">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -85,7 +85,7 @@
           </div>
         </div>
         <div class="col-sm-6 col-lg-3">
-          <div class="card text-white bg-danger link-href">
+          <div class="card text-white bg-blue link-href">
             <div class="card-body pb-0" [routerLink]="['/leave/approval-rejected-leave-list']">
               <button type="button" class="btn btn-transparent p-0 float-right">
                 <i class="icon-notebook"></i>
@@ -101,7 +101,7 @@
 
     <div class="col-lg-12" *ngIf="user_role != 'Employee'">
       <div class="card border-top-info border-top-3 mb-3">
-          <div class="card-header bg-success card-title"><strong>Subordinate leave list</strong></div>
+          <div class="card-header bg-blue card-title"><strong><i class="fa fa-cubes"></i> Subordinate leave list</strong></div>
           <div class="card-body text-dark table-responsive" *ngIf="is_list_loaded">
             <table class="table table-bordered table-sm">
               <thead>
@@ -135,7 +135,7 @@
                       <button type="button"  *ngIf="item.leave_status == 'Rejected'" class="btn btn-danger btn-sm"><strong>{{ item.leave_status }}</strong></button>
                   </td>
                   <td>
-                      <button class="btn btn-primary btn-sm" [routerLink]="['/leave/approval-leave-details', item.id ]"><i class="fa fa-eye"></i>&nbsp;Details</button>
+                      <button class="btn btn-blue btn-sm" [routerLink]="['/leave/approval-leave-details', item.id ]"><i class="fa fa-eye"></i>&nbsp;Details</button>
                   </td>
                 </tr>
                 <tr *ngIf="subordinateApplicationList.length <= 0">
@@ -154,7 +154,7 @@
 
     <div class="col-lg-6">
       <div class="card border-top-primary border-top-3 mb-3">
-          <div class="card-header bg-success card-title"><strong>Academic Calendar</strong></div>
+          <div class="card-header bg-blue card-title"><strong><i class="fa fa-calendar"></i> Academic Calendar</strong></div>
           <div class="card-body text-dark table-responsive" *ngIf="is_calender_loaded">
             <ngx-fullcalendar #theCalendar defaultView="month" [events]="events" [options]="options"></ngx-fullcalendar>
           </div>
@@ -164,7 +164,7 @@
       <div class="row">
         <div class="col-lg-12">
             <div class="card border-top-primary border-top-3 mb-3">
-                <div class="card-header bg-success card-title"><strong>My Leave list</strong></div>
+                <div class="card-header bg-blue card-title"><strong><i class="fa fa-list"></i> My Leave list</strong></div>
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
@@ -207,7 +207,7 @@
         </div>
         <div class="col-lg-12">
             <div class="card border-top-primary border-top-3 mb-3">
-                <div class="card-header bg-success card-title"><strong>My Leave Balance</strong></div>
+                <div class="card-header bg-blue card-title"><strong><i class="fa fa-braille"></i> My Leave Balance</strong></div>
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-sm-12 table-responsive" *ngIf="is_loaded">

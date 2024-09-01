@@ -12,7 +12,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" dropdown>
-            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <button dropdownToggle type="button" class="btn btn-blue dropdown-toggle">
               Button dropdown <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -82,7 +82,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" dropdown [isOpen]="status.isOpen" (isOpenChange)="change($event)" placement="top">
-            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <button dropdownToggle type="button" class="btn btn-blue dropdown-toggle">
               Button dropdown <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -96,7 +96,7 @@
               </li>
             </ul>
           </div>
-          <button type="button" class="btn btn-primary" (click)="toggleDropdown($event)">Toggle</button>
+          <button type="button" class="btn btn-blue" (click)="toggleDropdown($event)">Toggle</button>
         </div>
       </div>
     </div>
@@ -110,7 +110,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" dropdown [isDisabled]="disabled">
-            <button dropdownToggle type="button" class="btn btn-primary dropdownToggle">
+            <button dropdownToggle type="button" class="btn btn-blue dropdownToggle">
               Button dropdown <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">
@@ -138,7 +138,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" dropdown placement="bottom right">
-            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <button dropdownToggle type="button" class="btn btn-blue dropdown-toggle">
               This menu is right-aligned <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
@@ -162,7 +162,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" dropdown [dropup]="isDropup">
-            <button id="button-dropup" dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <button id="button-dropup" dropdownToggle type="button" class="btn btn-blue dropdown-toggle">
               Dropup <span class="caret"></span>
             </button>
             <ul id="dropdown-dropup" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-dropup">
@@ -196,7 +196,7 @@
         </div>
         <div class="card-body">
           <div class="btn-group" dropdown [autoClose]="autoClose">
-            <button dropdownToggle type="button" class="btn btn-primary dropdown-toggle">
+            <button dropdownToggle type="button" class="btn btn-blue dropdown-toggle">
               Button dropdown <span class="caret"></span>
             </button>
             <ul *dropdownMenu class="dropdown-menu" role="menu">

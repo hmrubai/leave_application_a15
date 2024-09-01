@@ -73,8 +73,8 @@
           <div *ngFor="let alert of alerts">
             <alert [type]="alert.type" [dismissible]="dismissible">{{ alert.msg }}</alert>
           </div>
-          <button type="button" class="btn btn-primary" (click)="dismissible = !dismissible">Toggle dismissible</button>
-          <button type="button" class="btn btn-primary" (click)="reset()">Reset</button>
+          <button type="button" class="btn btn-blue" (click)="dismissible = !dismissible">Toggle dismissible</button>
+          <button type="button" class="btn btn-blue" (click)="reset()">Reset</button>
         </div>
       </div>
     </div>
@@ -101,10 +101,10 @@
           <alert type="success">{{messages[index]}}</alert>
 
           <div *ngIf="index !== messages.length -1; else elseBlock">
-            <button class="btn btn-primary" (click)="changeText()">Change text</button>
+            <button class="btn btn-blue" (click)="changeText()">Change text</button>
           </div>
           <ng-template #elseBlock>
-            <button class="btn btn-primary" (click)="index = 0">Reset</button>
+            <button class="btn btn-blue" (click)="index = 0">Reset</button>
           </ng-template>
         </div>
       </div>
@@ -125,7 +125,7 @@
           <div *ngFor="let alert of alertsDismiss">
             <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
           </div>
-          <button type="button" class="btn btn-primary" (click)="add()">Add more</button>
+          <button type="button" class="btn btn-blue" (click)="add()">Add more</button>
         </div>
       </div>
     </div>

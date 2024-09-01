@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-lg-12">
       <div class="card">
-        <div class="card-header bg-primary">
+        <div class="card-header bg-blue">
           <h5><i class="fa fa-list"></i> Previous Leave Balance List</h5> 
           <!--<button class="btn btn-square btn-success btn-sm btn-sm-custom float-right" (click)="addBalanceModal.show()"><i class="fa fa-plus"></i> Add Leave Balance</button>-->
           <ng-select [items]="employeeList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
@@ -41,7 +41,7 @@
                 <td>{{ item.availed_days | number : '1.2-2' }}</td>
                 <td>{{ item.remaining_days | number : '1.2-2' }}</td>
                 <td>
-                    <!--<button class="btn btn-primary btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
+                    <!--<button class="btn btn-blue btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>
                     <button class="btn btn-warning btn-sm ml-1 mr-1" (click)="editLeaveBalanceItem(item)"><i class="fa fa-cut"></i> Cut</button>-->
                     <button class="btn btn-warning btn-sm" *ngIf="item.has_cutting_history" (click)="viewExplanation(item.cutting_explanation)"><i class="fa fa-eye"></i></button>
                 </td>
@@ -61,7 +61,7 @@
 <block-ui></block-ui>
 
 <div bsModal #addEmployeeLeaveBalanceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info" role="document">
+  <div class="modal-dialog modal-blue" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ modalTitle }}</h4>
@@ -102,14 +102,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>
 </div>
 
 <div bsModal #addBalanceModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-info modal-lg" role="document">
+  <div class="modal-dialog modal-blue modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">{{ modalTitle }}</h4>
@@ -150,7 +150,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onAddBalanceFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onAddBalanceFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>
@@ -230,7 +230,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
-        <button type="button" class="btn btn-info" (click)="onCuttingLeaveBalanceFormSubmit()">{{ btnSaveText }}</button>
+        <button type="button" class="btn btn-blue" (click)="onCuttingLeaveBalanceFormSubmit()">{{ btnSaveText }}</button>
       </div>
     </div>
   </div>
