@@ -74,7 +74,7 @@ export class DefaultLayoutComponent {
         }
 
         this.navItems.unshift(dash_item);
-        console.log(this.navItems);
+        //console.log(this.navItems);
     }
 
     removeItemsWithoutChildren(menu) {
