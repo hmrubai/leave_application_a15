@@ -62,7 +62,31 @@ export class DefaultLayoutComponent {
                 }
             }
         });
-        this.navItems = this.allNavItems;
+        this.navItems = this.removeItemsWithoutChildren(this.allNavItems);
+        let dash_item = {
+            name: 'Dashboard',
+            url: '/dashboard',
+            icon: 'icon-speedometer',
+            badge: {
+                variant: 'info',
+                text: ''
+            }
+        }
+
+        this.navItems.unshift(dash_item);
+        console.log(this.navItems);
+    }
+
+    removeItemsWithoutChildren(menu) {
+        return menu
+            .map((item) => {
+                if (item.children && item.children.length > 0 && item.name === 'Dashboard') {
+                    //console.log(item.children.length);
+                    //item.children = this.removeItemsWithoutChildren(item.children);
+                }
+                return item;
+            })
+            .filter((item) => item.children && item.children.length > 0 && item.name !== 'Dashboard');
     }
 
     toggleMinimize(e) {

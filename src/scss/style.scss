@@ -37,6 +37,15 @@
     border-color: #1c2e71;
 }
 
+.sidebar {
+    background: #101e55;
+}
+
+.sidebar .nav-link.active {
+    color: #fff;
+    background: #182765;
+}
+
 .sidebar .nav-link:hover {
     color: #fff;
     background: #1c2e71;

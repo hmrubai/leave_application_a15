@@ -10,12 +10,12 @@ export const navItems: INavData[] = [
             text: ''
         }
     },
+    // {
+    //     title: true,
+    //     name: 'System Settings'
+    // },
     {
-        title: true,
-        name: 'System Settings'
-    },
-    {
-        name: 'Master Settings',
+        name: 'Settings',
         url: '/master-settings',
         icon: 'icon-settings',
         children: [
@@ -93,12 +93,12 @@ export const navItems: INavData[] = [
             // }
         ]
     },
+    // {
+    //     title: true,
+    //     name: 'Calendar'
+    // },
     {
-        title: true,
-        name: 'Calendar'
-    },
-    {
-        name: 'Calendar Settings',
+        name: 'Calendar',
         url: '/calendar',
         icon: 'icon-calendar',
         children: [
@@ -128,12 +128,12 @@ export const navItems: INavData[] = [
             }
         ]
     },
+    // {
+    //     title: true,
+    //     name: 'Balance'
+    // },
     {
-        title: true,
-        name: 'Balance'
-    },
-    {
-        name: 'Balance Setup',
+        name: 'Balance',
         url: '/leave',
         icon: 'icon-layers',
         children: [
@@ -163,10 +163,10 @@ export const navItems: INavData[] = [
             }
         ]
     },
-    {
-        title: true,
-        name: 'Leave'
-    },
+    // {
+    //     title: true,
+    //     name: 'Leave'
+    // },
     {
         name: 'Leave Application',
         url: '/leave',
@@ -210,12 +210,12 @@ export const navItems: INavData[] = [
             }
         ]
     },
+    // {
+    //     title: true,
+    //     name: 'Flow Setup'
+    // },
     {
-        title: true,
-        name: 'Flow Setup'
-    },
-    {
-        name: 'Approval Setup',
+        name: 'Approval',
         url: '/leave',
         icon: 'icon-layers',
         children: [
