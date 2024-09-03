@@ -2,20 +2,13 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header bg-blue">
-          <h5><i class="fa fa-braille"></i> Attendance Log</h5>
-          <button class="btn btn-square btn-secondary btn-sm btn-sm-custom float-right" (click)="addFiscalYearModal.show()"><i class="fa fa-plus"></i> Upload Punch Log</button>
+          <h5><i class="fa fa-braille"></i> My Attendance Log</h5>
           <div class="col-lg-2 form-control-sm float-right fs-top">
             <input type="date"  [(ngModel)]="end_date" (change)="changeFilterDate()" id="end_date" class="form-control" placeholder="End Date">
           </div>
           <div class="col-lg-2 form-control-sm float-right fs-top">
             <input type="date"  [(ngModel)]="start_date" (change)="changeFilterDate()" id="start_date" class="form-control" placeholder="Start Date">
           </div>
-          <ng-select [items]="employeeList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
-            bindValue="id" [(ngModel)]="employee_id" (change)="onChangeEmployee($event)" placeholder="Select Employee">
-                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                    <span><strong>{{ item.name }} - {{item.email}}</strong></span>
-                </ng-template>
-          </ng-select>
         </div>
         <div class="card-body table-responsive">
           <table class="table table-bordered table-sm">

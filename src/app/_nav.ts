@@ -103,10 +103,16 @@ export const navItems: INavData[] = [
         icon: 'icon-event',
         children: [
             {
-                name: 'Upload Punch Log',
+                name: 'Attendance Log',
                 url: '/attendance/attendance-log',
                 icon: 'icon-event',
                 role: 'Admin,SuperAdministrator'
+            },
+            {
+                name: 'My Timesheet',
+                url: '/attendance/self-attendance-log',
+                icon: 'icon-list',
+                role: 'Admin,SuperAdministrator,Employee,ApprovalAuthority'
             }
         ]
     },

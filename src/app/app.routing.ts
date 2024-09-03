@@ -122,6 +122,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'attendance',
+        loadChildren: () => import('./views/attendance/self-attendance-log/self-attendance-log.module').then(m => m.SelfAttendanceLogModule),
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'leave',
         loadChildren: () => import('./views/master-settings/hsep-balance-settings/hsep-balance-settings.module').then(m => m.HsepBalanceSettingsModule),
         canActivate: [AuthGuard]

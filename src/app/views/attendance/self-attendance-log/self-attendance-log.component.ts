@@ -13,11 +13,11 @@ import * as XLSX from 'xlsx';
 import * as moment from 'moment';
 
 @Component({
-    selector: 'app-attendance-log',
-    templateUrl: 'attendance-log.component.html',
-    styleUrls: ['attendance-log.component.scss']
+    selector: 'app-self-attendance-log',
+    templateUrl: 'self-attendance-log.component.html',
+    styleUrls: ['self-attendance-log.component.scss']
 })
-export class AttendanceLogComponent implements OnInit {
+export class SelfAttendanceLogComponent implements OnInit {
     @ViewChild('addFiscalYearModal') public addFiscalYearModal: ModalDirective;
     branchForm: UntypedFormGroup;
     filterForm: UntypedFormGroup;
@@ -70,7 +70,6 @@ export class AttendanceLogComponent implements OnInit {
 
         this.filterForm = this.formBuilder.group({
             id: [null],
-            employee_id: [null],
             start_date: [null],
             end_date: [null]
         });
@@ -78,7 +77,7 @@ export class AttendanceLogComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
         //this.getCompanyList();
         //this.getFiscalYearList();
-        this.getEmployeeList();
+        //this.getEmployeeList();
     }
 
     get f() {
@@ -144,18 +143,12 @@ export class AttendanceLogComponent implements OnInit {
     }
 
     getFilterList(){
-        if (!this.employee_id) {
-            this.toastr.warning('Please, Select stuff!', 'Attention!', { timeOut: 2000 });
-            return;
-        }
-        //console.log(this.filterForm.value);
         this.blockUI.start('Loading...');
-        this._service.post('admin/attendance-log', this.filterForm.value).subscribe(res => {
+        this._service.post('self/attendance-log', this.filterForm.value).subscribe(res => {
             this.attendanceList = res.data;
             this.blockUI.stop();
         }, err => { 
             this.blockUI.stop();
-            this.toastr.error(err.message, 'Attention!', { timeOut: 2000 });
         }
         );
     }
