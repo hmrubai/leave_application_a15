@@ -1,0 +1,66 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-blue">
+          <h5><i class="fa fa-braille"></i> Attendance Log</h5>
+          <button class="btn btn-square btn-secondary btn-sm btn-sm-custom float-right" (click)="addFiscalYearModal.show()"><i class="fa fa-plus"></i> Upload Punch Log</button>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Fiscal Year</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Is Acitve</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of fiscalYearList; let i = index;">
+                <td>{{ item.fiscal_year }}</td>
+                <td>{{ item.start_date | date:'fullDate'}}</td>
+                <td>{{ item.end_date | date:'fullDate' }}</td>
+                <td>
+                    <span *ngIf="item.is_active" class="status bg-success">Active</span>
+                    <span *ngIf="!item.is_active" class="status bg-danger">Inactive</span>
+                </td>
+                <td>
+                    <!--<button class="btn btn-blue btn-sm" (click)="editItem(item)"><i class="fa fa-pencil"></i>&nbsp;Edit</button>-->
+                </td>
+              </tr>
+              <tr *ngIf="fiscalYearList.length <= 0">
+                <td colspan="5">No Fiscal Year added</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+            {{ fiscalYearList.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<block-ui></block-ui>
+
+<div bsModal #addFiscalYearModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-blue" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">{{ modalTitle }}</h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="col-md-12">
+            <input type="file" class="btn btn-block btn-blue" (change)="addfile($event)" accept=".csv" />
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+        <button type="button" class="btn btn-blue" (click)="submitPunchLog()">{{ btnSaveText }}</button>
+      </div>
+    </div>
+  </div>
+</div>

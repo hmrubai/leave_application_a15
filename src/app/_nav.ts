@@ -98,6 +98,19 @@ export const navItems: INavData[] = [
     //     name: 'Calendar'
     // },
     {
+        name: 'Attendance',
+        url: '/attendance',
+        icon: 'icon-event',
+        children: [
+            {
+                name: 'Upload Punch Log',
+                url: '/attendance/attendance-log',
+                icon: 'icon-event',
+                role: 'Admin,SuperAdministrator'
+            }
+        ]
+    },
+    {
         name: 'Calendar',
         url: '/calendar',
         icon: 'icon-calendar',
