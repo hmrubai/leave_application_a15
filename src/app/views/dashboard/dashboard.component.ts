@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 
 import { CommonService } from '../../_services/common.service';
 import { AuthenticationService } from '../../_services/authentication.service';
@@ -16,6 +17,8 @@ import { FullCalendarOptions, EventObject, FullCalendarComponent } from 'ngx-ful
     styleUrls: ['dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+    @ViewChild('LeavePolicyModal') public LeavePolicyModal: ModalDirective;
+
     LoginForm: UntypedFormGroup;
     submitted = false;
     returnUrl: string;
@@ -136,8 +139,11 @@ export class DashboardComponent implements OnInit {
         //this.blockUI.start('Loading...');
         this._service.get('approval-dashboard-summary').subscribe(res => {
             this.subordinateSummary = res.data;
-            console.log(res.data)
+            
+            // this.subordinateApplicationList = res.data.pending_list;
+            // console.log(this.subordinateApplicationList)
             this.is_subordinate_summary_loaded = true;
+            // this.is_list_loaded = true;
             this.blockUI.stop();
         }, err => { 
             this.blockUI.stop();

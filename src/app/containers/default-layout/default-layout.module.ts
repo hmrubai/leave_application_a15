@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import {SharedModule} from '../../../core/shared.module';
+import {SharedModule} from '../../core/shared.module';
 import { BlockUIModule } from 'ng-block-ui';
-import { ApplyForLeaveComponent } from './apply-for-leave.component';
-import { ApplyForLeaveRoutingModule } from './apply-for-leave-routing.module';
+//import { DefaultLayoutComponent } from './default-layout.component';
+//import { ApplyForLeaveRoutingModule } from './apply-for-leave-routing.module';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
@@ -14,9 +14,11 @@ import { CommonModule } from '@angular/common';
     NgSelectModule,
     ReactiveFormsModule,
     SharedModule,
-    ApplyForLeaveRoutingModule,
+    //ApplyForLeaveRoutingModule,
     BlockUIModule
   ],
-  declarations: [ ApplyForLeaveComponent ]
+  declarations: [ 
+    //DefaultLayoutComponent 
+    ]
 })
-export class ApplyForLeaveModule { }
+export class DefaultLayoutModule { }

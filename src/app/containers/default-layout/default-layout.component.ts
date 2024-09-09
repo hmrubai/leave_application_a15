@@ -1,18 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Cookie } from 'ng2-cookies';
 import { ToastrService } from 'ngx-toastr';
 import { navItems } from '../../_nav';
 import { AuthenticationService } from '../../_services/authentication.service';
 import { environment } from '../../../environments/environment';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './default-layout.component.html'
 })
 export class DefaultLayoutComponent {
+    @ViewChild('LeavePolicyModal') public LeavePolicyModal: ModalDirective;
     public sidebarMinimized = false;
     public allNavItems = navItems;
+
+    modalTitle = 'Leave Policy';
+    btnSaveText = 'Close';
 
     public user_role = null;
 
@@ -97,9 +102,17 @@ export class DefaultLayoutComponent {
         this.authService.logout(window.location.hostname);
         Cookie.delete('.BBLEAVEMS.Cookie', '/', window.location.hostname);
         this.authService.currentUserDetails.next(null);
-        this.router.navigate(['/login']);
         this.toastr.success('Logout Successfully', 'Success!', { timeOut: 2000 });
-        this.router.navigate(["/login"]);
+        this.router.navigate(['/login']).then(() => {
+            window.location.reload();
+        });
+        ///this.router.navigate(["/login"]);
+    }
+
+    modalHide() {
+        this.LeavePolicyModal.hide();
+        this.modalTitle = 'Leave Policy';
+        this.btnSaveText = 'Close';
     }
 
 }

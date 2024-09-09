@@ -33,6 +33,7 @@
         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
         </div>
       </li>
+      <button class="btn btn-square btn-warning btn-sm btn-sm-custom float-right mr-2" (click)="LeavePolicyModal.show()"><i class="fa fa-file-text"></i> Leave Policy</button>
     </cui-breadcrumb>
     <div class="container-fluid">
       <router-outlet></router-outlet>
@@ -40,6 +41,70 @@
   </main>
 </div>
 <app-footer>
-  <span><a href="https://bacbonltd.com/">BacBon Limited.</a> &copy; 2023.</span>
+  <span><a href="https://bacbonltd.com/">BacBon Limited.</a> &copy; 2024.</span>
   <span class="ml-auto">Powered by <a href="https://bacbonltd.com/">BacBon Limited.</a></span>
 </app-footer>
+
+<div bsModal #LeavePolicyModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-warning modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">
+          Leave Policy of BacBon Limited (Effective from 1<sup>st</sup> April 2022).
+        </h4>
+        <button type="button" class="close" (click)="modalHide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <ol>
+              <li><strong>Annual leave</strong> will be available after 01 years of service. After one year of service, an employee will get 1.11 days <strong>AL</strong> per month, considering 01 day's leave for every 18 days of work.
+              <ul>
+              <li>An employee must apply for <strong>AL</strong> at least 02-day in advance.</li>
+              <li>AL will be carried forward and encashment facility is available for the unconsumed <strong>AL</strong>. For the detailed procedure and policy of encashment, employee is requested to consult with <strong>HRD</strong>.</li>
+              </ul>
+              </li>
+              <li><strong>Casual leave</strong> is available from the beginning of the employment. An employee is entitled to 0.83-day <strong>CL</strong> every month. <strong>CL</strong> is only applicable for any acceptable emergency case. <strong>CL</strong> is not available for the consecutive days.</li>
+              <li><strong>Sick leave</strong> is available from the beginning of the employment. An employee is entitled to 1.17-day <strong>SL</strong> every month. When applying for <strong>SL</strong> for more than 03 days, an employee must produce medical documents.
+              <ul>
+              <li><strong>Casual and sick leave</strong> will not be carried forward. It will be replenished at the end of every December.</li>
+              <li>If an employee is sick, injured, or unable to work, he/she must notify the supervisor &amp; <strong>HRD</strong> preferably by <strong>SMS</strong>, <strong>by 9.0 a.m</strong>. on the ﬁrst day of absence. Employees should state the causes for his/her absence.</li>
+              <li>Employees should check medical advice for sickness, injury, or contact with a contagious disease whenever possible. BacBon Ltd. maintains the right to ask an employee to consult a doctor during any medical absence and notify the insurance company for the medical benefits.</li>
+              <li>Any false statement an employee makes regarding absences due to medication incapacity or contact with contagious diseases may lead to an investigation. BacBon Ltd. may take disciplinary action in the event of falsifying sickness information.</li>
+              </ul>
+              </li>
+              <li>Employees should apply for leave of absence to the supervisor immediately <strong>(within 24 hours)</strong> for approval, and the supervisor should forward it to <strong>HRD</strong>.</li>
+              <li>An employee can apply for a <strong>maximum 10-day</strong> <strong>leave in Liu</strong> (in exchange for working on a holiday) in a calendar year.</li>
+              <li>An employee can request for <strong>maximum 10-day home/remote offices</strong> for a calendar year for personal reasons maintaining the topmost security of company documents and accessories. An employee must approve a concrete plan &amp; action with the supervisor or manager for home office days and submit an everyday report to the supervisor/manager, including <strong>HRD</strong>. Applicable reasons for <strong>home office</strong> request might be a visit outside of the country, natural disaster, risk of spreading contagious disease, etc.</li>
+              <li>A female employee will get <strong>120-day maternity leave</strong> (maximum) fulfilling the following conditions:</li>
+              </ol>
+              <ul>
+              <li>Work tenure in the company must be at least 6 months.</li>
+              <li>Have not more than two children
+              <ul>
+              <li>During maternity leave, every month an employee will get 50% of gross payment deducting conveyance amount. After the end of the <strong>maternity leave</strong> and resuming the job, rest 50% of the monthly pay will be paid upon production of childbirth proof with the application.</li>
+              </ul>
+              </li>
+              </ul>
+              <ol start="8">
+              <li>A male employee will get maximum7-day <strong>paternity leave</strong> including holidays fulfilling the following conditions:</li>
+              </ol>
+              <ul>
+              <li>Work tenure in the company must be at least 6 months.</li>
+              <li>Have not more than two children</li>
+              </ul>
+              <p><strong>N.B:</strong> <strong>Maternity</strong> (Clause 7) and <strong>paternity</strong> (Clause 8) leave conditions are not applicable for employed persons in a managerial and administrative role.</p>
+              <ol start="9">
+              <li>An employee can apply for maximum 7-day <strong>wedding leave</strong> for the 1<sup>st</sup> marriage including holidays.</li>
+              </ol>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalHide()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

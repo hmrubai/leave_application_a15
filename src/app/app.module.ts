@@ -54,6 +54,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -79,7 +81,8 @@ import { ChartsModule } from 'ng2-charts';
     HttpClientModule,
     NgSelectModule,
     NgxFullCalendarModule,
-    MatDialogModule
+    MatDialogModule,
+    ModalModule.forRoot() 
   ],
   declarations: [
     AppComponent,

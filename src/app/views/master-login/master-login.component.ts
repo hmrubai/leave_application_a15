@@ -58,7 +58,7 @@ export class MasterLoginComponent implements OnInit {
             data => {
                 if(data.status){
                     this.toastr.success('Logging Successfully', 'Success!', { timeOut: 2000 });
-                    this.router.navigate(['/login']).then(() => {
+                    this.router.navigate(['/dashboard']).then(() => {
                         this.blockUI.stop();
                         window.location.reload();
                     });
