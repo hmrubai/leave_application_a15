@@ -33,9 +33,42 @@ export class AttendanceLogComponent implements OnInit {
     importedData:any;
     dataImported = false;
 
+    start_grace_time = null;
+    end_grace_time = null;
     employee_id = null;
     start_date = null;
     end_date = null;
+
+    grace_time = [
+        {
+            id: "00:00:00",
+            value: "00:00:00"
+        },
+        {
+            id: "00:05:00",
+            value: "00:05:00"
+        },
+        {
+            id: "00:10:00",
+            value: "00:10:00"
+        },
+        {
+            id: "00:15:00",
+            value: "00:15:00"
+        },
+        {
+            id: "00:20:00",
+            value: "00:20:00"
+        },
+        {
+            id: "00:25:00",
+            value: "00:25:00"
+        },
+        {
+            id: "00:30:00",
+            value: "00:30:00"
+        }
+    ]
 
     modalTitle = 'Upload Attendance Log';
     btnSaveText = 'Save';
@@ -69,10 +102,11 @@ export class AttendanceLogComponent implements OnInit {
         });
 
         this.filterForm = this.formBuilder.group({
-            id: [null],
             employee_id: [null],
             start_date: [null],
-            end_date: [null]
+            end_date: [null],
+            start_grace_time: [null],
+            end_grace_time: [null],
         });
 
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
@@ -148,7 +182,22 @@ export class AttendanceLogComponent implements OnInit {
             this.toastr.warning('Please, Select stuff!', 'Attention!', { timeOut: 2000 });
             return;
         }
-        //console.log(this.filterForm.value);
+
+        if(this.start_date){
+            this.filterForm.controls['start_date'].setValue(this.validateDateTimeFormat(this.start_date));
+        }
+        if(this.end_date){
+            this.filterForm.controls['end_date'].setValue(this.validateDateTimeFormat(this.end_date));
+        }
+        
+        if(!this.start_date || !this.end_date){
+            this.toastr.warning('Please, Select Date!', 'Attention!', { timeOut: 2000 });
+            return;
+        }
+
+        this.filterForm.controls['start_grace_time'].setValue(this.start_grace_time);
+        this.filterForm.controls['end_grace_time'].setValue(this.end_grace_time);
+
         this.blockUI.start('Loading...');
         this._service.post('admin/attendance-log', this.filterForm.value).subscribe(res => {
             this.attendanceList = res.data;
