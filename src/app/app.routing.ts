@@ -117,6 +117,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'notice',
+        loadChildren: () => import('./views/notice/notice-board/notice-board.module').then(m => m.NoticeBoardModule),
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'attendance',
         loadChildren: () => import('./views/attendance/attendance-log/attendance-log.module').then(m => m.AttendanceLogModule),
         canActivate: [AuthGuard]

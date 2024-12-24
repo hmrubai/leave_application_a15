@@ -213,32 +213,54 @@
             </div>
         </div>
         <div class="col-lg-12">
-            <div class="card border-top-primary border-top-3 mb-3">
-                <div class="card-header bg-blue card-title"><strong><i class="fa fa-braille"></i> My Leave Balance</strong></div>
+          <div class="card border-top-primary border-top-3 mb-3">
+                <div class="card-header bg-blue card-title"><strong><i class="fa fa-braille"></i> Notice</strong></div>
                 <div class="card-body text-dark">
                     <div class="row">
                         <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
-                            <table class="table table-bordered table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Leave Type</th>
-                                        <th>Total Days</th>
-                                        <th>Avail Days</th>
-                                        <th>Remaining</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let item of leaveBalanceList; let i = index;">
-                                        <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
-                                        <td>{{ item.total_days | number : '1.2-2' }}</td>
-                                        <td>{{ item.availed_days | number : '1.2-2' }}</td>
-                                        <td>{{ item.remaining_days | number : '1.2-2' }}</td>
-                                    </tr>
-                                    <tr *ngIf="leaveBalanceList.length <= 0">
-                                        <td colspan="4">No Leave Balance added</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        
+                          <div class="row">
+                            <div class="col-sm-12" *ngFor="let item of noticeList | slice:0:3; let i = index;">
+                              <div class="notice notice-success" *ngIf="item.notice_type == 'Low'">
+                                <div class="row">
+                                  <div class="col-lg-10">
+                                    <strong>{{ item.title }}</strong> 
+                                    <br/>{{ item.description }}
+                                  </div>
+                                  <div class="col-lg-2">
+                                    <span class="pull-right text-success readMore">Read</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="notice notice-danger" *ngIf="item.notice_type == 'High'">
+                                  <div class="row">
+                                  <div class="col-lg-10">
+                                    <strong>{{ item.title }}</strong> 
+                                    <br/>{{ item.description }}
+                                  </div>
+                                  <div class="col-lg-2">
+                                    <span class="pull-right text-success readMore">Read</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="notice notice-warning" *ngIf="item.notice_type == 'Medium'">
+                                  <div class="row">
+                                  <div class="col-lg-10">
+                                    <strong>{{ item.title }}</strong> 
+                                    <br/>{{ item.description }}
+                                  </div>
+                                  <div class="col-lg-2">
+                                    <span class="pull-right text-success readMore">Read</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div class="notice notice-info col-lg-12" *ngIf="noticeList.length <= 0">
+                                  No notice has been added.
+                            </div>
+
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -246,6 +268,39 @@
         </div>
       </div>
       
+    </div>
+
+    <div class="col-lg-12">
+        <div class="card border-top-primary border-top-3 mb-3">
+            <div class="card-header bg-blue card-title"><strong><i class="fa fa-braille"></i> My Leave Balance</strong></div>
+            <div class="card-body text-dark">
+                <div class="row">
+                    <div class="col-sm-12 table-responsive" *ngIf="is_loaded">
+                        <table class="table table-bordered table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Leave Type</th>
+                                    <th>Total Days</th>
+                                    <th>Avail Days</th>
+                                    <th>Remaining</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of leaveBalanceList; let i = index;">
+                                    <td>{{ item.leave_title }} ({{ item.leave_short_code }})</td>
+                                    <td>{{ item.total_days | number : '1.2-2' }}</td>
+                                    <td>{{ item.availed_days | number : '1.2-2' }}</td>
+                                    <td>{{ item.remaining_days | number : '1.2-2' }}</td>
+                                </tr>
+                                <tr *ngIf="leaveBalanceList.length <= 0">
+                                    <td colspan="4">No Leave Balance added</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   </div>
 </div>

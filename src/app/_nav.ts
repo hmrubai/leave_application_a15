@@ -117,6 +117,19 @@ export const navItems: INavData[] = [
         ]
     },
     {
+        name: 'Notice',
+        url: '/notice',
+        icon: 'icon-event',
+        children: [
+            {
+                name: 'Notice Board',
+                url: '/notice/notice',
+                icon: 'icon-event',
+                role: 'Admin,SuperAdministrator,ApprovalAuthority'
+            }
+        ]
+    },
+    {
         name: 'Calendar',
         url: '/calendar',
         icon: 'icon-calendar',

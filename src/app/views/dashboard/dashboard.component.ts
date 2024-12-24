@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit {
     public user_role = null;
 
     leaveBalanceList: Array<any> = [];
+    noticeList: Array<any> = [];
     applicationList: Array<any> = [];
     subordinateApplicationList: Array<any> = [];
     subordinateSummary: Array<any> = [];
@@ -90,6 +91,7 @@ export class DashboardComponent implements OnInit {
             this.dashboard = res.data;
             this.leaveBalanceList = res.data.balance_list;
             this.applicationList = res.data.leave_list;
+            this.noticeList = res.data.notice;
 
             this.applicationList.forEach(item => {
                 if(item.leave_status == "Approved"){
