@@ -166,30 +166,30 @@ export const navItems: INavData[] = [
     // },
     {
         name: 'Balance',
-        url: '/leave',
+        url: '/balance',
         icon: 'icon-layers',
         children: [
             {
                 name: 'My Leave Balance',
-                url: '/leave/my-leave-balance',
+                url: '/balance/my-leave-balance',
                 icon: 'icon-wallet',
                 role: 'Admin,SuperAdministrator,Employee,ApprovalAuthority'
             },
             {
                 name: 'Balance Setup',
-                url: '/leave/employee-leave-balance',
+                url: '/balance/employee-leave-balance',
                 icon: 'icon-wallet',
                 role: 'Admin,SuperAdministrator'
             },
             {
                 name: 'Previous Balance',
-                url: '/leave/employee-previous-leave-balance',
+                url: '/balance/employee-previous-leave-balance',
                 icon: 'icon-wallet',
                 role: 'Admin,SuperAdministrator'
             },
             {
                 name: 'Auto Balance Add',
-                url: '/leave/hsep-balance-settings',
+                url: '/balance/hsep-balance-settings',
                 icon: 'icon-wallet',
                 role: 'Admin,SuperAdministrator'
             }
@@ -248,12 +248,12 @@ export const navItems: INavData[] = [
     // },
     {
         name: 'Approval',
-        url: '/leave',
+        url: '/flow',
         icon: 'icon-layers',
         children: [
             {
                 name: 'Approval Flow Setup',
-                url: '/leave/approval-work-flow-setup',
+                url: '/flow/approval-work-flow-setup',
                 icon: 'icon-organization',
                 role: 'Admin,SuperAdministrator'
             }

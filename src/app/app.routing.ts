@@ -132,27 +132,27 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'leave',
+        path: 'balance',
         loadChildren: () => import('./views/master-settings/hsep-balance-settings/hsep-balance-settings.module').then(m => m.HsepBalanceSettingsModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'leave',
+        path: 'balance',
         loadChildren: () => import('./views/leave/employee-leave-balance/employee-leave-balance.module').then(m => m.EmployeeLeaveBalanceListModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'leave',
+        path: 'balance',
         loadChildren: () => import('./views/leave/employee-previous-leave-balance/employee-previous-leave-balance.module').then(m => m.EmployeePreviousLeaveBalanceListModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'leave',
+        path: 'balance',
         loadChildren: () => import('./views/leave/my-leave-balance/my-leave-balance.module').then(m => m.MyLeaveBalanceListModule),
         canActivate: [AuthGuard]
       },
       {
-        path: 'leave',
+        path: 'flow',
         loadChildren: () => import('./views/leave/approval-work-flow-setup/approval-work-flow-setup.module').then(m => m.ApprovalWorkFlowSetupModule),
         canActivate: [AuthGuard]
       },

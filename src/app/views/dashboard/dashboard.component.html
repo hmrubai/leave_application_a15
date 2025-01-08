@@ -200,6 +200,7 @@
                                       <button type="button"  *ngIf="item.leave_status == 'Pending'" class="btn btn-warning btn-sm"><strong>{{ item.leave_status }}</strong></button>
                                       <button type="button"  *ngIf="item.leave_status == 'Approved'" class="btn btn-success btn-sm"><strong>{{ item.leave_status }}</strong></button>
                                       <button type="button"  *ngIf="item.leave_status == 'Rejected'" class="btn btn-danger btn-sm"><strong>{{ item.leave_status }}</strong></button>
+                                      <button type="button"  *ngIf="item.leave_status == 'Withdraw'" class="btn btn-danger btn-sm"><strong>Withdrawn</strong></button>
                                   </td>
                                 </tr>
                                 <tr *ngIf="applicationList.length <= 0">
