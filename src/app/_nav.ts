@@ -242,10 +242,6 @@ export const navItems: INavData[] = [
             }
         ]
     },
-    // {
-    //     title: true,
-    //     name: 'Flow Setup'
-    // },
     {
         name: 'Approval',
         url: '/flow',
@@ -256,6 +252,19 @@ export const navItems: INavData[] = [
                 url: '/flow/approval-work-flow-setup',
                 icon: 'icon-organization',
                 role: 'Admin,SuperAdministrator'
+            }
+        ]
+    },
+    {
+        name: 'Report',
+        url: '/report',
+        icon: 'icon-layers',
+        children: [
+            {
+                name: 'Individual Register',
+                url: '/report/individual-leave-register',
+                icon: 'icon-event',
+                role: 'Admin,SuperAdministrator,ApprovalAuthority'
             }
         ]
     },

@@ -217,6 +217,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'report',
+        loadChildren: () => import('./views/report/individual-leave-register/individual-leave-register.module').then(m => m.IndividualLeaveRegisterModule),
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
         canActivate: [AuthGuard]

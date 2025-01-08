@@ -81,6 +81,23 @@ export class CommonService {
             );
     }
 
+    downloadPostFile(url: string, obj?: any): any {
+        let params = new HttpParams();
+
+        if (obj) {
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    params = params.append(key, obj[key]);
+                }
+            }
+        }
+        return this.http.post(environment.apiUrl + url, params, { responseType: 'blob' })
+            .pipe(
+                map((result: any) => {
+                    return result;
+                })
+            );
+    }
 
     downloadMaterialFile(url: string): any {
         return this.http.get(url, { responseType: 'blob' })
