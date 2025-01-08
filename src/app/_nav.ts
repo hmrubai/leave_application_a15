@@ -265,6 +265,12 @@ export const navItems: INavData[] = [
                 url: '/report/individual-leave-register',
                 icon: 'icon-event',
                 role: 'Admin,SuperAdministrator,ApprovalAuthority'
+            },
+            {
+                name: 'Summary Register',
+                url: '/report/summary-leave-register',
+                icon: 'icon-event',
+                role: 'Admin,SuperAdministrator,ApprovalAuthority'
             }
         ]
     },

@@ -127,6 +127,10 @@ export class EmployeeComponent implements OnInit {
             value: "ApprovalAuthority"
         },
         {
+            id: "AuthorityAdmin",
+            value: "AuthorityAdmin"
+        },
+        {
             id: "Others",
             value: "Others"
         } 

@@ -222,6 +222,11 @@ export const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'report',
+        loadChildren: () => import('./views/report/summary-leave-register/summary-leave-register.module').then(m => m.SummaryLeaveRegisterModule),
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'dashboard',
         loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule),
         canActivate: [AuthGuard]
