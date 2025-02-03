@@ -21,7 +21,9 @@
                 <th>Image</th>
                 <th>Name</th>
                 <th>Email</th>
-                <th>Designation, Department</th>
+                <th>Wing</th>
+                <th>Designation</th>
+                <th>Department</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -39,8 +41,13 @@
                     {{ item.mobile }}
                 </td>
                 <td>
-                    {{ item.designation ? item.designation : '-' }}<span *ngIf="item.wing">({{ item.wing_name }})</span>, {{ item.department ? item.department : '-' }}<br/>
-                    <!--<span *ngIf="item.is_hsep" class="badge badge-success">HSEP</span>-->
+                    <span *ngIf="item.wing">{{ item.wing_name ? item.wing_name : '-' }}</span>
+                </td>
+                <td>
+                    {{ item.designation ? item.designation : '-' }}
+                </td>
+                <td>
+                    {{ item.department ? item.department : '-' }}
                 </td>
                 <td>
                     <button class="btn btn-success btn-sm mr-1" (click)="openDetailsModal(item)"><i class="fa fa-eye"></i>&nbsp;</button>
