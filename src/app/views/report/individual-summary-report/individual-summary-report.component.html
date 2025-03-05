@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header bg-blue">
+          <h5><i class="fa fa-list"></i> Individual Summary Report</h5>
+          <div class="col-lg-1 form-control-sm float-right fs-top">
+            <button class="btn btn-secondary" (click)="resetFilterForm()" >Reset</button>
+          </div>
+          <!-- <ng-select [items]="employeeList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
+            bindValue="id" [(ngModel)]="employee_id" (change)="onChangeEmployee($event)" placeholder="Select Employee">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <span><strong>{{ item.name }} - {{item.email}}</strong></span>
+                </ng-template>
+          </ng-select> -->
+          <ng-select [items]="departmentList" bindLabel="name" class="col-lg-2 form-control-sm float-right fs-top"
+            bindValue="id" [(ngModel)]="department_id" (change)="onChangeDepartment($event)" placeholder="Select Department">
+                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                    <span><strong>{{ item.name }}</strong></span>
+                </ng-template>
+          </ng-select>
+          <div class="col-lg-2 form-control-sm float-right fs-top">
+            <input type="date"  [(ngModel)]="end_date" (change)="changeFilterDate()" id="end_date" class="form-control" placeholder="End Date">
+          </div>
+          <div class="col-lg-2 form-control-sm float-right fs-top">
+            <input type="date"  [(ngModel)]="start_date" (change)="changeFilterDate()" id="start_date" class="form-control" placeholder="Start Date">
+          </div>
+          
+        </div>
+        <div class="card-body table-responsive">
+          <!-- <div class="col-lg-1 form-control-sm float-right fs-top" *ngIf="individualSummaryData.length > 0">
+            <button class="btn btn-blue" (click)="downloadRegisterReport()" >Download</button>
+          </div> -->
+          <br *ngIf="individualSummaryData.length > 0"/>
+          <br *ngIf="individualSummaryData.length > 0"/>
+
+          <table class="table table-bordered table-sm">
+            <thead>
+              <tr>
+                <th rowspan="2">Employee Name</th>
+                <th colspan="2">Annual Leave</th>
+                <th colspan="2">Sick Leave</th>
+                <th colspan="2">Casual Leave</th>
+                <th colspan="2">Leave in Lieu</th>
+                <th colspan="2">Wedding Leave</th>
+                <th colspan="2">Home Office</th>
+                <th colspan="2" *ngIf="hasPaternityLeave()">Maternity/Paternity Leave</th>
+                <th>Total Consumed</th>
+              </tr>
+              <tr>
+                <th>Total</th>
+                <th>Consumed</th>
+                <th>Total</th>
+                <th>Consumed</th>
+                <th>Total</th>
+                <th>Consumed</th>
+                <th>Total</th>
+                <th>Consumed</th>
+                <th>Total</th>
+                <th>Consumed</th>
+                <th>Total</th>
+                <th>Consumed</th>
+                <th *ngIf="hasPaternityLeave()">Total</th>
+                <th *ngIf="hasPaternityLeave()">Consumed</th>
+                <!-- <th *ngIf="hasMaternityLeave()">Total</th> -->
+                <th>Consumed/Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of individualSummaryData">
+                <td><strong>{{ item.employee_name }}</strong></td>
+                <td>{{ item.annual_leave_total }}</td>
+                <td>{{ item.annual_leave_consume }}</td>
+                <td>{{ item.sick_leave_total }}</td>
+                <td>{{ item.sick_leave_consume }}</td>
+                <td>{{ item.casual_leave_total }}</td>
+                <td>{{ item.casual_leave_consume }}</td>
+                <td>{{ item.leave_in_lieu_total }}</td>
+                <td>{{ item.leave_in_lieu_consume }}</td>
+                <td>{{ item.wedding_leave_total }}</td>
+                <td>{{ item.wedding_leave_consume }}</td>
+                <td>{{ item.home_office_total }}</td>
+                <td>{{ item.home_office_consume }}</td>
+                <td *ngIf="item.paternity_leave_total !== undefined">{{ item.paternity_leave_total }}</td>
+                <td *ngIf="item.paternity_leave_consume !== undefined">{{ item.paternity_leave_consume }}</td>
+                <td *ngIf="item.maternity_leave_total !== undefined">{{ item.maternity_leave_total }}</td>
+                <td *ngIf="item.maternity_leave_consume !== undefined">{{ item.maternity_leave_consume }}</td>
+                <td><strong>{{ item.total_consume }}/{{ item.total_balance }} ({{ item.percentage_consumed }})</strong></td>
+              </tr>
+              <tr *ngIf="individualSummaryData.length === 0">
+                <td colspan="15">No Data Found!</td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="card-footer">
+            {{ individualSummaryData.length }} Rows
+        </div>
+      </div>
+    </div>
+</div>
+<block-ui></block-ui>
