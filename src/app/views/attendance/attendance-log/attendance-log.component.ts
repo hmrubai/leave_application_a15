@@ -39,6 +39,18 @@ export class AttendanceLogComponent implements OnInit {
     start_date = null;
     end_date = null;
 
+    total_working_days = 0;
+    total_present_days = 0;
+    total_weekend_holiday = 0;
+    total_absent_days = 0;
+    total_leave_days = 0;
+    total_early_out = 0;
+    total_late = 0;
+    total_working_hr = "00:00:00";
+    expected_working_hour = "00:00:00";
+    total_over_time = "00:00:00";
+
+
     grace_time = [
         {
             id: "00:00:00",
@@ -200,7 +212,20 @@ export class AttendanceLogComponent implements OnInit {
 
         this.blockUI.start('Loading...');
         this._service.post('admin/attendance-log', this.filterForm.value).subscribe(res => {
-            this.attendanceList = res.data;
+            this.attendanceList = res.data.record_data;
+
+            this.total_working_days = res.data.total_working_days;
+            this.total_present_days = res.data.total_present;
+            this.total_weekend_holiday = res.data.total_weekend_holiday;
+            this.total_absent_days = res.data.total_absent;
+            this.total_leave_days = res.data.leave_count;
+            this.total_early_out = res.data.total_early_out;
+            this.total_late = res.data.total_late;
+            this.total_working_hr = res.data.total_working_hr;
+
+            this.expected_working_hour = res.data.expected_working_hour;
+            this.total_over_time = res.data.total_over_time;
+
             this.blockUI.stop();
         }, err => { 
             this.blockUI.stop();

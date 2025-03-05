@@ -98,6 +98,12 @@ export class DefaultLayoutComponent {
         this.sidebarMinimized = e;
     }
 
+    gotoChangePassword(){
+        console.log("goto change password");
+        this.router.navigate(['/login/change-password']);
+        console.log("goto change password");
+    }
+
     userLogout() {
         this.authService.logout(window.location.hostname);
         Cookie.delete('.BBLEAVEMS.Cookie', '/', window.location.hostname);

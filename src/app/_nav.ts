@@ -10,10 +10,6 @@ export const navItems: INavData[] = [
             text: ''
         }
     },
-    // {
-    //     title: true,
-    //     name: 'System Settings'
-    // },
     {
         name: 'Settings',
         url: '/master-settings',
@@ -84,19 +80,9 @@ export const navItems: INavData[] = [
                 url: '/master-settings/leave-balance-settings',
                 icon: 'icon-chart',
                 role: 'Admin,SuperAdministrator'
-            },
-            // {
-            //     name: 'Organogram',
-            //     url: '/master-settings/organogram',
-            //     icon: 'icon-organization',
-            //     role: 'Admin,Employee,ApprovalAuthority'
-            // }
+            }
         ]
     },
-    // {
-    //     title: true,
-    //     name: 'Calendar'
-    // },
     {
         name: 'Attendance',
         url: '/attendance',
@@ -160,10 +146,6 @@ export const navItems: INavData[] = [
             }
         ]
     },
-    // {
-    //     title: true,
-    //     name: 'Balance'
-    // },
     {
         name: 'Balance',
         url: '/balance',
@@ -195,10 +177,6 @@ export const navItems: INavData[] = [
             }
         ]
     },
-    // {
-    //     title: true,
-    //     name: 'Leave'
-    // },
     {
         name: 'Leave Application',
         url: '/leave',
@@ -273,5 +251,5 @@ export const navItems: INavData[] = [
                 role: 'Admin,SuperAdministrator,ApprovalAuthority'
             }
         ]
-    },
+    }
 ];

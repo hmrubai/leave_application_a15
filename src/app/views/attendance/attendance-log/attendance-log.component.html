@@ -33,13 +33,84 @@
             </ng-select>
             <button class="btn btn-square bg-blue" (click)="getFilterList()"><i class="fa fa-filter"></i> Filter</button>
           </div>
-          <table class="table table-bordered table-sm mt-4">
+          <div class="row">
+            <div class="col-lg-12 mt-3 mb-3">
+              <div class="summary-grid">
+                <div class="summary-card">
+                    <div class="card-content working-days">
+                        <div class="card-label">Total Working Days</div>
+                        <div class="card-value">{{ total_working_days }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-content present">
+                        <div class="card-label">Present Days</div>
+                        <div class="card-value">{{ total_present_days }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-content weekend">
+                        <div class="card-label">Weekend & Holiday</div>
+                        <div class="card-value">{{ total_weekend_holiday }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-content sick">
+                        <div class="card-label">Leave</div>
+                        <div class="card-value">{{ total_leave_days }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-content absent">
+                        <div class="card-label">Absent</div>
+                        <div class="card-value">{{ total_absent_days }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-content late">
+                        <div class="card-label">Total Late In</div>
+                        <div class="card-value">{{ total_late }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="card-content early">
+                        <div class="card-label">Total Early Out</div>
+                        <div class="card-value">{{ total_early_out }}</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                  <div class="card-content present">
+                      <div class="card-label">Expected Working Hours</div>
+                      <div class="card-value">{{ expected_working_hour }}</div>
+                  </div>
+                </div>
+                <div class="summary-card">
+                  <div class="card-content present">
+                      <div class="card-label">Total Working Hours</div>
+                      <div class="card-value">{{ total_working_hr }}</div>
+                  </div>
+                </div>
+                <div class="summary-card">
+                  <div class="card-content present">
+                      <div class="card-label">Extra Hours</div>
+                      <div class="card-value">{{ total_over_time }}</div>
+                  </div>
+                </div>
+                
+            </div>
+
+
+
+            </div>
+          </div>
+          <table class="table table-bordered table-sm">
             <thead>
               <tr>
                 <th>Date</th>
                 <th>Start Time</th>
                 <th>End Time</th>
                 <th>Total Working Hour</th>
+                <th>Day Type</th>
                 <th>Late In</th>
                 <th>Early Out</th>
                 <th>Log History</th>
@@ -60,16 +131,20 @@
                     <span *ngIf="item.has_working_hour_completed" class="total_hr_green">{{ item.total_time }}</span>
                     <span *ngIf="!item.has_working_hour_completed" class="total_hr_red">{{ item.total_time }}</span>
                 </td>
+                <td>
+                  <span class="status-badge present" *ngIf="item.day_code == 'P'" style="color: GREEN;">{{ item.day_code }}</span>
+                  <span class="status-badge present" *ngIf="item.day_code != 'P'" style="color: RED;">{{ item.day_code }}</span>
+                </td>
                 <td class="text-center">
                     <span *ngIf="item.late_in" class="total_hr_red"><i class="fa fa-check"></i></span>
                 </td>
                 <td class="text-center">
                     <span *ngIf="item.early_out" class="total_hr_red"><i class="fa fa-check"></i></span>
                 </td>
-                <td><small><span class="punch_time">{{ item.punch_log }}</span></small></td>
+                <td><small><span class="punch_time">{{ item.punch_time }}</span></small></td>
               </tr>
               <tr *ngIf="attendanceList.length <= 0">
-                <td colspan="7">No Data Found!</td>
+                <td colspan="10">No Data Found!</td>
               </tr>
             </tbody>
           </table>

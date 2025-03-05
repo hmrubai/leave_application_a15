@@ -58,8 +58,8 @@
 
 .punch_time{
     color: #4c4c4c;
-    font-weight: 300;
-    // font-style: italic;
+    font-weight: 500;
+    font-style: italic;
 }
 
 .total_hr_red{
@@ -76,4 +76,8 @@
 
 .breadcrumb {
     border-bottom: 0px solid #c8ced3;
+}
+
+.table-bordered th, .table-bordered td {
+    border: 1px solid #e1e2e3 !important;
 }
